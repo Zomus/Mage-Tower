@@ -44,9 +44,9 @@ public class TrapController : MonoBehaviour {
             if (tileRef.trapType == TileController.SPRING_TRAP)
             {
                 //this is a spring trap
-                if (ec.levitated)
+                if (!ec.levitated)
                 {
-                    //enemy is already in the air
+                    //if enemy is on the ground
 
                     ec.lifted();
                     //let the enemy know that it is in the air

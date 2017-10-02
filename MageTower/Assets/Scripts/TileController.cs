@@ -137,8 +137,10 @@ public class TileController : MonoBehaviour {
          */ 
 		if(name != "Default"){
             //if 'name' is not "Default"
-			Material newMat = Resources.Load("Materials/"+name, typeof(Material)) as Material;
-			//look up and obtain the newly assigned material in resources folder
+
+			Material newMat = Resources.Load("Material/" + name, typeof(Material)) as Material;
+			//look up and obtain the newly assigned material in Resources folder
+
             if(newMat != null)
             {
                 //material was found

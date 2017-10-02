@@ -213,7 +213,7 @@ public class GameController : MonoBehaviour {
 				//if the object hit is marked as "Trappable" by a tag AND trap is selected
 				highlightedTile = castObject;
 				//select highlighted tile
-				highlightedTile.GetComponent<TileController>().assignNewMaterial("GrassTop");
+				highlightedTile.GetComponent<TileController>().assignNewMaterial("TileSelect");
 				//assign a new material to the tile to show that it is highlighted
 
 				//PLACING TRAP
