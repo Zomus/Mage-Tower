@@ -96,6 +96,7 @@ public class EnemyController : MonoBehaviour
 
             if (targetFloor != currentFloor)
             {
+                rb.isKinematic = true;
                 //not on the same floor as the goal
                 if (targetFloor > currentFloor)
                 {
@@ -126,9 +127,6 @@ public class EnemyController : MonoBehaviour
                     }
                 }
 
-                rb.velocity = new Vector3(0f, climbing * climbSpeed, 0f);
-                //change velocity of the enemy to either positive (climbing up) or negative (climbing down)
-
                 anim.SetInteger("State", 3);
                 //set animation to climbing
 
@@ -142,14 +140,13 @@ public class EnemyController : MonoBehaviour
         }
 
 		if(climbing != 0){ //Climbing
+            transform.Translate(0f, climbing * climbSpeed * Time.deltaTime, 0f);
+
 			if((climbing > 0 && gameObject.transform.position.y + heightOffset >= climbTargetElevation) ||(climbing < 0 && gameObject.transform.position.y + heightOffset <= climbTargetElevation)){
                 //climbing up AND at or above targetElevation (including offset) OR climbing down AND at or below targetElevation (including offset)
 
 				climbing = 0;
 				//not climbing
-
-				rb.velocity = new Vector3();
-				//stop climbing
 
 				currentFloor = (int)climbTargetElevation;
 				//change the currentFloor after climbing a ladder
