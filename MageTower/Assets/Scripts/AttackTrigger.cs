@@ -10,7 +10,7 @@ public class AttackTrigger : MonoBehaviour {
     //CLASS FUNCTION
 	void OnTriggerEnter (Collider other) {
 		if(other.tag == "Enemy"){
-			//if an enemy enters this area, it will begin attacking
+            //if an enemy enters this area, it will begin attacking
 
 			other.GetComponent<EnemyController>().attackWizard();
             //begin attack animation

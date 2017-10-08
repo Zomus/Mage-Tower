@@ -51,7 +51,7 @@ public class TrapController : MonoBehaviour {
                     ec.lifted();
                     //let the enemy know that it is in the air
 
-                    other.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-1f, 1f), 10f, Random.Range(-1f, 1f));
+                    other.GetComponent<Rigidbody>().velocity = new Vector3(0.5f, 12f, 0f);
                     //fling the enemy up with a force
 
                     tileRef.ready = false;

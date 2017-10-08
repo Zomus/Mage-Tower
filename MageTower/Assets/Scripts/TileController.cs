@@ -60,10 +60,10 @@ public class TileController : MonoBehaviour {
             {
                 //enemy was falling (not rising)
 
-                Debug.Log("Landed at a speed of: " + landSpeed);
+                //Debug.Log("Landed at a speed of: " + landSpeed);
                 //print out how fast it landed on the ground
 
-                if (landSpeed < -9f)
+                if (landSpeed < -10f)
                 {
                     //velocity was faster than 9 as it hits the ground
                     other.GetComponent<EnemyController>().death();

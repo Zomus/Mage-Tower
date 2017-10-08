@@ -97,6 +97,8 @@ public class EnemyController : MonoBehaviour
             if (targetFloor != currentFloor)
             {
                 rb.isKinematic = true;
+                //no forces can be applied to it while it is climbing the ladder
+
                 //not on the same floor as the goal
                 if (targetFloor > currentFloor)
                 {
@@ -146,9 +148,12 @@ public class EnemyController : MonoBehaviour
                 //climbing up AND at or above targetElevation (including offset) OR climbing down AND at or below targetElevation (including offset)
 
 				climbing = 0;
-				//not climbing
+                //not climbing
 
-				currentFloor = (int)climbTargetElevation;
+                rb.isKinematic = false;
+                //forces can be applied to it again since it is finished climbing the ladder
+
+                currentFloor = (int)climbTargetElevation;
 				//change the currentFloor after climbing a ladder
 
 				agent.enabled = true;
@@ -415,22 +420,27 @@ public class EnemyController : MonoBehaviour
         /* DO:
          * Called as the enemy dies.
          * Changes states and activates explosion effect.
-         */ 
-		dead = true;
-		//mark as dead
+         */
+        if (!dead)
+        {
+            //if not dead (prevents this function from being called several times and generating more income)
 
-		agent.enabled = false;
-		//stop navigating
+            dead = true;
+            //mark as dead
 
-		anim.SetInteger("State", -1);
-		//play fall animation
+            agent.enabled = false;
+            //stop navigating
 
-		StartCoroutine(disableCollider(0.2f));
-        //disable the collider after 0.2 seconds
+            anim.SetInteger("State", -1);
+            //play fall animation
 
-		StartCoroutine(waitForExplode(1f));
-		//explode after 1 second
-	}
+            StartCoroutine(disableCollider(0.2f));
+            //disable the collider after 0.2 seconds
+
+            StartCoroutine(waitForExplode(1f));
+            //explode after 1 second
+        }
+    }
 
 	private IEnumerator disableCollider(float delay){
         /* PARAMETER:
@@ -476,10 +486,11 @@ public class EnemyController : MonoBehaviour
          * Called when the goal is reached.
          * Begin attacking the wizard when it gets in range.
          */
-        agent.enabled = false;
-		//stop navigating
 
-		anim.SetInteger("State", 2);
+        agent.isStopped = true;
+        //stop the agent from moving
+
+        anim.SetInteger("State", 2);
 		//change animation to attacking
 	}
 	

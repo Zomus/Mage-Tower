@@ -89,7 +89,7 @@ public class GameController : MonoBehaviour {
 
     //CLASS FUNCTIONS
     
-    void Start () {
+    void Awake () {
 		GameController.main = this;
 		//attach static reference to main so that any object can reference main
 
