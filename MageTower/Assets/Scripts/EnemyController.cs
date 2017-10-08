@@ -486,9 +486,12 @@ public class EnemyController : MonoBehaviour
          * Called when the goal is reached.
          * Begin attacking the wizard when it gets in range.
          */
-
-        agent.isStopped = true;
-        //stop the agent from moving
+        if (agent.isActiveAndEnabled)
+        {
+            //agent is navigating
+            agent.isStopped = true;
+            //stop the agent from moving
+        }
 
         anim.SetInteger("State", 2);
 		//change animation to attacking

@@ -30,9 +30,9 @@ public class TrapController : MonoBehaviour {
             EnemyController ec = other.GetComponent<EnemyController>();
             //obtain reference to the EnemyController component in enemy
 
-            if (ec.dead || !tileRef.ready)
+            if (ec.dead)
             {
-                //enemy is dead OR trap is not set
+                //enemy is dead
 
                 return;
                 //do nothing
@@ -44,18 +44,36 @@ public class TrapController : MonoBehaviour {
             if (tileRef.trapType == TileController.SPRING_TRAP)
             {
                 //this is a spring trap
-                if (!ec.levitated)
+
+                if (tileRef.ready)
                 {
-                    //if enemy is on the ground
+                    //trap is ready to be sprung
+                    if (!ec.levitated)
+                    {
+                        //if enemy is on the ground
 
-                    ec.lifted();
-                    //let the enemy know that it is in the air
-
-                    other.GetComponent<Rigidbody>().velocity = new Vector3(0.5f, 12f, 0f);
+                        ec.lifted();
+                        //let the enemy know that it is in the air
+                    }
+                    other.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-1f, 1f), 12f, Random.Range(-1f, 1f));
                     //fling the enemy up with a force
 
                     tileRef.ready = false;
                     //trap is no longer ready once sprung
+                }
+                else
+                {
+                    //trap is already sprung
+                    if (ec.levitated)
+                    {
+                        //enemy landing on a trap
+
+                        other.GetComponent<Rigidbody>().velocity = new Vector3(Random.Range(-1f, 1f), 12f, Random.Range(-1f, 1f));
+                        //fling the enemy up with a force
+
+                        anim.SetTrigger("Relaunch");
+                        //triger trap animation again
+                    }
                 }
             }
 
