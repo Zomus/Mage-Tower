@@ -81,10 +81,13 @@ public class TrapController : MonoBehaviour {
             {
                 //this is a saw trap
 
-                ec.death();
-                //kills the enemy immediately
-                tileRef.ready = false;
-                //trap is no longer ready once sprung
+                if (tileRef.ready)
+                {
+                    ec.death();
+                    //kills the enemy immediately
+                    tileRef.ready = false;
+                    //trap is no longer ready once sprung
+                }
             }
         }
     }
