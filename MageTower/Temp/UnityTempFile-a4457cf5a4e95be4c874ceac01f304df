@@ -99,10 +99,10 @@
 -define:ENABLE_NATIVE_ARRAY_CHECKS
 -define:UNITY_TEAM_LICENSE
 -define:ENABLE_VSTU
-Assets/FinanceDisplayer.cs
 Assets/Scripts/AttackTrigger.cs
 Assets/Scripts/EnemyController.cs
 Assets/Scripts/ExampleClass.cs
+Assets/Scripts/FinanceDisplayer.cs
 Assets/Scripts/GameController.cs
 Assets/Scripts/LadderController.cs
 Assets/Scripts/MageHandController.cs

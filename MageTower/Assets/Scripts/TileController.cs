@@ -88,13 +88,14 @@ public class TileController : MonoBehaviour {
 
         trapType = type;
         //mark the trap type of the block to the type of the trap
+
         ready = true;
         //note that the trap is ready to trap an enemy
         Vector3 dropLocation = transform.position;
         //define where the trap is to be placed
-        GameObject tempTrap = Instantiate(GameController.main.trapPrefabs[trapType], dropLocation, Quaternion.identity, GameController.main.trapContainer.transform) as GameObject;
+        GameObject tempTrap = Instantiate(GameController.main.trapClasses[trapType].prefab, dropLocation, Quaternion.identity, GameController.main.trapContainer.transform) as GameObject;
         //spawn the trap at the dropLocation inside the trapContainer
-
+        
         trapRef = tempTrap.GetComponent<TrapController>();
         //obtain a reference to the trap that is placed on this tile
 

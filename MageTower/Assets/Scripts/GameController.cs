@@ -72,12 +72,13 @@ public class GameController : MonoBehaviour {
 	//Prefab (blueprint) of spawned tiles
 
 	public int trapType;
-	/*Type of trap that is being placed
+    /*Type of trap that is being placed
 	 * 1 = Spring Trap
 	 * 2 = Saw Trap
 	*/
 
-	public GameObject[] trapPrefabs;
+    
+    public TrapClass[] trapClasses;
 	//0th element is left undefined as 0 means no trap
 
 	public GameObject highlightedTile;
@@ -87,10 +88,23 @@ public class GameController : MonoBehaviour {
 	Ray ray;
 	RaycastHit hit;
 
+    [System.Serializable]
+    public class TrapClass
+    {
+        //PURPOSE: Custom class that contains information about that type of trap.
+
+        public GameObject prefab;
+        //prefab that the trap is 
+
+        public int cost;
+        //anima cost of the trap
+     
+    }
+
     //CLASS FUNCTIONS
-    
+
     void Awake () {
-		GameController.main = this;
+		main = this;
 		//attach static reference to main so that any object can reference main
 
 		//SPAWN ALL BLOCKS
@@ -229,10 +243,20 @@ public class GameController : MonoBehaviour {
 						//Debug.Log("Trap placed");
                         //print out that a trap has been placed
 
-                        selectedTile.placeTrap(trapType);
-                        //place a trapType type trap on the tile
 
-					}else{
+                        if(finance - trapClasses[trapType].cost >= 0)
+                        {
+                            //if there is enough money to pay for the trap
+
+                            selectedTile.placeTrap(trapType);
+                            //place a trapType type trap on the tile
+
+                            finance -= trapClasses[trapType].cost;
+                            //spend money to buy the trap
+                        }
+                    }
+                    else
+                    {
                         //trap has already been placed on the tile
 
                         //Debug.Log("Trap resetted");
