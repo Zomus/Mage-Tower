@@ -29,7 +29,10 @@ public class GameController : MonoBehaviour {
 	public GameObject particleContainer;
 	//parent GameObject that contains all spawned particle effects
 	public GameObject ladderContainer;
-	//parent GameObject that contains all ladders
+    //parent GameObject that contains all ladders
+
+    public GameObject mageHand;
+    //mage hand GameObject
 
 	//PLAYER STATS
 	public int wizardHpMax;
@@ -266,9 +269,42 @@ public class GameController : MonoBehaviour {
 						//reset trap
 					}
 				}
-			}
-		}
 
+			}
+
+            else if(castObject.tag == "Enemy")
+            {
+                //if the object found is an enemy
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    //run this block upon clicking
+
+                    EnemyController pickedEnemy = castObject.GetComponent<EnemyController>();
+                    //obtain the EnemyController attached to the enemy
+
+                    pickedEnemy.held();
+                    //levitates enemy
+
+                    mageHand.GetComponent<MageHandController>().heldEnemy = pickedEnemy;
+                    //store the enemy that has been picked up inside the MageHandController
+                }
+
+                if (Input.GetMouseButtonUp(0) && mageHand.GetComponent<MageHandController>().heldEnemy != null)
+                {
+                    //run this block upon releasing
+
+                    mageHand.GetComponent<MageHandController>().heldEnemy.released();
+                    //release the enemy
+
+                    mageHand.GetComponent<MageHandController>().heldEnemy = null;
+                    //no enemy is being held again
+                }
+
+
+            }
+		}
+        
 		//STAGE TIMER
 		if(stageTimerRunning){
 			//if the timer is counting

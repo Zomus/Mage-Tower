@@ -31,6 +31,9 @@ public class EnemyController : MonoBehaviour
     public bool levitated = true;
     //whether this enemy is in the air (not touching the ground/navigating navmesh)
 
+    private bool heldByHand = false;
+    //whether this enemy is held by the mage hand
+
     //NAVIGATION
     List<GameObject> destList = new List<GameObject>();
     //list of destinations that this character must traverse to reach its goal
@@ -174,7 +177,17 @@ public class EnemyController : MonoBehaviour
 			death();
             //kill this enemy
 		}
-	}
+
+        if (heldByHand)
+        {
+            //while being held by the mage hand
+
+            GameObject mhc = GameController.main.mageHand;
+            //obtain reference of the mage hand
+            transform.position = mhc.transform.position - mhc.GetComponent<MageHandController>().offset;
+            //set its position to the magehand's position minus the offset of the model
+        }
+    }
 
     void setNewDest(GameObject newGoal){
         /* PARAMETERS:
@@ -386,7 +399,31 @@ public class EnemyController : MonoBehaviour
 		//stop navigating
 	}
 
-	public void landed(int elevation){
+    public void held()
+    {
+        levitated = true;
+        //marked as levitated
+
+        heldByHand = true;
+        //marked as being held by the mage hand
+
+        anim.SetInteger("State", 0);
+        //change animation to idle (EDIT: change to flailing)
+
+        agent.enabled = false;
+        //stop navigating
+    }
+
+    public void released()
+    {
+        rb.useGravity = true;
+        //apply gravity
+
+        heldByHand = false;
+        //unmarked as being held by the mage hand
+    }
+
+    public void landed(int elevation){
         /* PARAMETER:
          * elevation = height of the location where this enemy landed
          * DO:

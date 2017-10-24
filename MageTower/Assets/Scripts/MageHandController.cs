@@ -4,25 +4,27 @@ using System.Collections;
 public class MageHandController : MonoBehaviour {
 
 	Animator anim;
-	//int grabHash = Animator.StringToHash("Grab");
+    //int grabHash = Animator.StringToHash("Grab");
 
-	// Use this for initialization
-	void Start () {
+    public Vector3 offset = new Vector3(1.5f, 0f, -2f);
+    //offset between the coordinate offset of the (0, 0, 0) of the hand and its true center
+
+    public EnemyController heldEnemy;
+
+    // Use this for initialization
+    void Start () {
 		anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -4);
+		Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
 		//point of the mouse using screen coordinates
 
-		Vector3 offset = new Vector3(1.5f, -3.5f, 4.5f);
-		//offset between the coordinate offset of the (0, 0, 0) of the hand and its true center
-
 		Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
-		//point of the mouse in game coordinates
+        //point of the mouse in game coordinates
 
-		gameObject.transform.position = curPosition + offset;
+        gameObject.transform.position = curPosition + offset;
 		//change the gameObject's position to follow the mouse
 
 		if(gameObject.transform.position.y < 0f){
@@ -43,8 +45,10 @@ public class MageHandController : MonoBehaviour {
 		}
 		//Debug.Log("Grabbing: "+anim.GetBool("Grabbing"));
 	}
-	// Targets point when mouse left click is held.
+    // Targets point when mouse left click is held.
 }
+
+
 
 /*
 if (Input.GetMouseButtonDown(0))
