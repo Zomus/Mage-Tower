@@ -99,7 +99,7 @@ public class TileController : MonoBehaviour {
         trapRef = tempTrap.GetComponent<TrapController>();
         //obtain a reference to the trap that is placed on this tile
 
-        trapRef.setTileReference(this);
+        //trapRef.setTileReference(this);
         //pass a reference of this TileController object to the placed tile
     }
 

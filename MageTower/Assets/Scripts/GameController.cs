@@ -20,8 +20,6 @@ public class GameController : MonoBehaviour {
 	//IMPORTANT GAME_OBJECTS
 	public GameObject pauseMenu;
 	//pause menu
-	public GameObject tileContainer;
-	//parent GameObject that will contain all spawned tiles
 	public GameObject enemyContainer;
 	//parent GameObject that will contain all spawned enemies
 	public GameObject trapContainer;
@@ -30,9 +28,11 @@ public class GameController : MonoBehaviour {
 	//parent GameObject that contains all spawned particle effects
 	public GameObject ladderContainer;
     //parent GameObject that contains all ladders
-
+    
     public GameObject mageHand;
     //mage hand GameObject
+
+    public SampleTrapController sampleTrap;
 
 	//PLAYER STATS
 	public int wizardHpMax;
@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour {
 	public int finance = 0;
 	//coins the player has collected
 
-
+    
 	//STAGE TIMER
 	public bool stageTimerRunning;
 	//whether the stage timer is counting
@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour {
 	public int stageTime = 100;
 	//total seconds until portal opens and player escapes
 
-
+    
 	//ENEMY SPAWNING
 	public GameObject enemyPrefab;
 	//Prefab (blueprint) of spawned enemies
@@ -66,26 +66,23 @@ public class GameController : MonoBehaviour {
 	//capsule in game that specifies where enemies are spawned
 
 	public GameObject goalCapsule;
-	//capsule in game that specifies where enemies move towards
+    //capsule in game that specifies where enemies move towards
 
 
 
-	//SPAWNING TILES AND TRAPS
-	public GameObject tilePrefab;
-	//Prefab (blueprint) of spawned tiles
+    //SPAWNING TRAPS
 
-	public int trapType;
+    public Material sampleMat;
+    //default material of the trap as it is dropped
+
+    public int trapType;
     /*Type of trap that is being placed
 	 * 1 = Spring Trap
 	 * 2 = Saw Trap
 	*/
-
     
     public TrapClass[] trapClasses;
 	//0th element is left undefined as 0 means no trap
-
-	public GameObject highlightedTile;
-	//Currently selected tile
 
 	//RAYCASTING - for mouse over tile selection
 	Ray ray;
@@ -97,7 +94,7 @@ public class GameController : MonoBehaviour {
         //PURPOSE: Custom class that contains information about that type of trap.
 
         public GameObject prefab;
-        //prefab that the trap is 
+        //prefab that the trap is
 
         public int cost;
         //anima cost of the trap
@@ -108,74 +105,12 @@ public class GameController : MonoBehaviour {
 
     void Awake () {
 		main = this;
-		//attach static reference to main so that any object can reference main
+        //attach static reference to main so that any object can reference main
+        sampleTrap.convertType(trapType);
+        //apply new type to the sampleTrap
+    }
 
-		//SPAWN ALL BLOCKS
-		int height = 0;
-		//represents height of blocks being created by subsequent instructions
-
-		/* Axes represented by each variable
-		 * i		= z axis (left/right)
-		 * j or k	= x axis (front/back)
-		 * height	= y axis (up/down)
-		 */
-
-		for(int i = -5; i < 0; i++){
-			for(int j = -14; j < 14; j++){
-				spawnTile(j, height, i);
-			}
-		}
-		//^^spawn blocks at (-14 ≤ x < 14, y = 0, -5 ≤ z < 0)
-
-		{//brackets to make sure j can be used in other places (restricts the variable j to a local variable)
-			for(int j = -2; j < 0; j++){
-				spawnTile(j, height, 0);
-			}
-			for(int k = 2; k < 4; k++){
-				spawnTile(k, height, 0);
-				//must use k because j was used in same brackets
-			}
-		}
-		//^^spawn blocks at (-2 ≤ x < 0 and 2 ≤ x < 4, y = 0, z = 0)
-
-		for(int i = 1; i < 3; i++){
-			for(int j = -2; j < 4; j++){
-				spawnTile(j, height, i);
-			}
-		}
-		//^^spawn blocks at (-2 ≤ x < 4, y = 0, 1 ≤ z < 3)
-
-		height = 5;
-		//new spawn height
-
-		for(int i = 1; i < 3; i++){
-			for(int j = -2; j < 4; j++){
-				if(!(i == 2 && j == 2)){
-					//traps cannot be placed on location where the player climbs up
-					//(i.e do not place block on (2, 2)
-					spawnTile(j, height, i);
-				}
-			}
-		}
-		//^^spawn blocks at (-2 ≤ x < 4, y = 5, 1 ≤ z < 3), except at (2, 5, 2) where the ladder exists
-
-		//***Improvement point: condense into a function to spawn adjacent groups of blocks***
-	}
-
-	void spawnTile(float xPos, float yPos, float zPos){
-		/* PARAMETERS:
-		 * xPos = x position where the tile will be spawned
-		 * yPos = y position where the tile will be spawned
-		 * zPos = z position where the tile will be spawned
-		 * DOES:
-		 * Creates a single tile at (xPos, yPos, zPos) and load it into the game
-		 */
-
-		Instantiate(tilePrefab, new Vector3(xPos, yPos, zPos), Quaternion.identity, tileContainer.transform);
-		//instantiates a new tile at location specified inside the tileContainer
-	}
-
-	void spawnEnemy(float xPos, float yPos, float zPos){
+    void spawnEnemy(float xPos, float yPos, float zPos){
 		/* PARAMETERS:
 		 * xPos = x position where the tile will be spawned
 		 * yPos = y position where the tile will be spawned
@@ -193,86 +128,96 @@ public class GameController : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Alpha0)){
 			//if 0 key is pressed
 			trapType = 0;
-			//no traps will be selected
+            //no traps will be selected
+            sampleTrap.convertType(trapType);
+            //apply new type to the sampleTrap
 		}
 		else if(Input.GetKeyDown(KeyCode.Alpha1)){
 			//if 1 key is pressed
 			trapType = 1;
-			//spring trap will be selected
-		}
-		else if(Input.GetKeyDown(KeyCode.Alpha2)){
+            //spring trap will be selected
+            sampleTrap.convertType(trapType);
+            //apply new type to the sampleTrap
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2)){
 			//if 2 key is pressed
 			trapType = 2;
-			//saw trap will be selected
-		}
+            //saw trap will be selected
+            sampleTrap.convertType(trapType);
+            //apply new type to the sampleTrap
+        }
 
-		//TILE DISELECTION
-		if(highlightedTile != null){
-			//if a tile was previously highlighted
-			highlightedTile.GetComponent<TileController>().assignNewMaterial("Default");
-			//reassign default material to reset texture of selected tile every frame
-			highlightedTile = null;
-			//diselect the previously highlighted
-		}
-
-		//LAYERING - allows selection of tile to place traps on
-		int mask = ~(1 << 8);
+        //LAYERING - allows selection of tile to place traps on
+        int mask = ~(1 << 8);
 		//Creates a layermask that allows the ray to pass through layer 8 (layer that contains the mage hand as to not select it)
 
 		//CASTING THE RAY - to obtain the object that the player is pointing at
-		GameObject castObject = castRay(mask);
-		//cast a ray based on mouse location to obtain a GameObject (through the mask)
+		GameObject castObject = castRayTarget(mask);
+        //cast a ray based on mouse location to obtain a GameObject (through the mask)
 
-		//TILE SELECTION
-		if(castObject != null){
-			//run the following only if the ray is casted on an object
-			if (castObject.tag == "Trappable" && trapType != 0){
-				//if the object hit is marked as "Trappable" by a tag AND trap is selected
-				highlightedTile = castObject;
-				//select highlighted tile
-				highlightedTile.GetComponent<TileController>().assignNewMaterial("TileSelect");
-				//assign a new material to the tile to show that it is highlighted
+        Vector3 castPoint = castRayPoint(mask);
+        //cast a ray based on mouse location to obtain a point at which it hit something
 
-				//PLACING TRAP
-				if (Input.GetMouseButtonUp(0)){
-					//run this block upon clicking
+        //SELECTION
+        if (trapType != 0)
+        {
+            //trap placing mode
+            
+            if (castObject != null && castPoint != Vector3.negativeInfinity)
+            {
+                //run the following only if the ray is casted on an object (and that the point is not far off at negative infinity)
 
-					TileController selectedTile = castObject.GetComponent<TileController>();
-					//obtain the TileController component of the object
+                sampleTrap.gameObject.SetActive(true);
+                //allow trap to be seen
 
-					if(selectedTile.trapType == 0){
-						//no trap has been placed on the tile
+                sampleTrap.teleport(castPoint);
+                //display trap at cast location
+                
+                if (castObject.tag == "Trappable")
+                {
+                    //if the object hit is marked as "Trappable" by a tag AND trap is selected
 
-						//Debug.Log("Trap placed");
-                        //print out that a trap has been placed
+                    sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial(true);
 
+                    //PLACING TRAP
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        //run this block upon clicking
 
-                        if(finance - trapClasses[trapType].cost >= 0)
+                        if (sampleTrap.colliding == 0)
                         {
-                            //if there is enough money to pay for the trap
+                            //colliding with 0 objects
 
-                            selectedTile.placeTrap(trapType);
-                            //place a trapType type trap on the tile
+                            if (finance - trapClasses[trapType].cost >= 0)
+                            {
+                                //if there is enough money to pay for the trap
 
-                            finance -= trapClasses[trapType].cost;
-                            //spend money to buy the trap
+                                placeTrap(trapType, castPoint);
+                                //place a trapType type trap on the tile
+
+                                finance -= trapClasses[trapType].cost;
+                                //spend money to buy the trap
+                            }
+                            
                         }
                     }
-                    else
-                    {
-                        //trap has already been placed on the tile
+                }
+                else
+                {
+                    //not trappable
 
-                        //Debug.Log("Trap resetted");
-                        //print out that a trap has been resetted
-
-                        selectedTile.resetTrap();
-						//reset trap
-					}
-				}
-
-			}
-
-            else if(castObject.tag == "Enemy")
+                    sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial();
+                }
+            }
+            else
+            {
+                sampleTrap.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            //trap type is 0 (killing enemies mode)
+            if (castObject.tag == "Enemy")
             {
                 //if the object found is an enemy
 
@@ -300,10 +245,12 @@ public class GameController : MonoBehaviour {
                     mageHand.GetComponent<MageHandController>().heldEnemy = null;
                     //no enemy is being held again
                 }
-
-
+                
             }
-		}
+        }
+
+
+        
         
 		//STAGE TIMER
 		if(stageTimerRunning){
@@ -336,7 +283,7 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	GameObject castRay(int layerMask){
+	GameObject castRayTarget(int layerMask){
 		/* PARAMETERS:
 		 * layerMask = bit mask that filters out which layers should be ignored by the RayCast
 		 * DOES:
@@ -359,6 +306,142 @@ public class GameController : MonoBehaviour {
 			//return null
 		}
 	}
+    Vector3 castRayPoint(int layerMask)
+    {
+        /* PARAMETERS:
+		 * layerMask = bit mask that filters out which layers should be ignored by the RayCast
+		 * DOES:
+		 * Casts a ray from the main camera to infinity at the mouse location
+		 * RETURN VALUE:
+		 * Returns the point at where the Ray hits; if no object is hit, returns a Vector3 containing negative infinity
+		 */
+
+        ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //casts a ray from camera to the point where the mouse is hovering over
+
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
+        {
+            //Physics.Raycast returns true if hits and return the hit object as a RaycastHit --> something is hit
+            return hit.point;
+            //return the object that is hit
+        }
+        else
+        {
+            //if nothing was hit
+
+            return Vector3.negativeInfinity;
+            //return a vector with negative infinity x, y, z
+        }
+    }
+
+    void placeTrap(int trapType, Vector3 dropLocation)
+    {
+        GameObject tempTrap = Instantiate(trapClasses[trapType].prefab, dropLocation, Quaternion.identity, trapContainer.transform) as GameObject;
+    }
+
+    public static bool setMaterialOfChild(Transform obj, string child, string mat)
+    {
+        /* PARAMETERS:
+         * obj = parent object to search through
+         * mat = name of material in the Material folder inside the Resources folder in Assets
+         * surface = name of the child object
+         * DO:
+         * Sets the material of all children of 'obj' with the name 'child' to 'mat'.
+         * RETURN VALUE:
+         * Returns true if at least the material on one object has been changed.
+         */
+
+        Transform searchSurface = getChild(obj, child);
+        //surface with a name of the child
+
+        if (searchSurface != null)
+        {
+            //surface to apply the material is found
+
+            if (mat != "Default")
+            {
+                //if 'name' is not "Default"
+
+                Material newMat = Resources.Load("Material/" + mat, typeof(Material)) as Material;
+                //look up and obtain the newly assigned material in Resources folder
+
+                if (newMat != null)
+                {
+                    //material was found
+                    searchSurface.GetComponent<MeshRenderer>().material = newMat;
+                    //assign new material to the surface
+
+                    return true;
+                    //material applied
+                }
+                else
+                {
+                    //material was not found
+
+                    Debug.Log("ERROR: Material \"" + mat + "\" was not found.");
+                    //print out an error message saying that the material cannot be found
+
+                    return false;
+                    //no material applied
+                }
+            }
+            else
+            {
+                //'mat' is default
+
+                //getChild(surface).GetComponent<MeshRenderer>().material = defaultMat;
+                //assign default material
+
+                return true;
+            }
+        }
+        else
+        {
+            if (obj.childCount == 0)
+            {
+                //no children of the transform
+
+                return false;
+                //return that material was not applied
+            }
+            else
+            {
+                bool rv = false;
+                //return value for whether a material was applied to any children
+
+                foreach (Transform deepChild in obj)
+                {
+                    //for loop searches through the parent GameObject's Transform
+                    rv = rv || setMaterialOfChild(deepChild, child, mat);
+                    //set rv to true if any recursive calls return true
+                    //rv remains true if it was already true, but a recursive call returns false
+                }
+
+                return rv;
+            }
+        }
+    }
+
+    public static Transform getChild(Transform obj, string name)
+    {
+        /* PARAMETERS:
+         * name = name of the child object
+         * RETURN VALUE:
+         * Returns the Transform of a child object with the name 'name'.
+         */
+
+        foreach (Transform child in obj)
+        { //for loop searches through the parent GameObject's Transform
+            if (child.name == name)
+            { //if names match
+                return child;
+                //return that the child's reference
+            }
+        }
+
+        Debug.Log("Error: Child cannot be found.");
+        return null;
+    }
 }
 
 
