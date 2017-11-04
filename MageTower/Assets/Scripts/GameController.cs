@@ -146,6 +146,14 @@ public class GameController : MonoBehaviour {
             sampleTrap.convertType(trapType);
             //apply new type to the sampleTrap
         }
+        else if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            //if key 3 is pressed 
+            trapType = 3;
+            //fan trap will be selected
+            sampleTrap.convertType(trapType);
+            //apply new type to the sampleTrap
+        }
 
         //LAYERING - allows selection of tile to place traps on
         int mask = ~(1 << 8);

@@ -15,6 +15,7 @@ public class TrapController : MonoBehaviour
     //TRAP TYPES - using integers to represent the type of trap
     public const int SPRING_TRAP = 1;
     public const int SAW_TRAP = 2;
+    public const int FAN_TRAP = 3;
 
     //COMPONENTS
     public Animator anim;

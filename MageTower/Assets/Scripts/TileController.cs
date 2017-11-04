@@ -19,6 +19,7 @@ public class TileController : MonoBehaviour {
     public const int NO_TRAP = 0;
 	public const int SPRING_TRAP = 1;
 	public const int SAW_TRAP = 2;
+    public const int FAN_TRAP = 3;
     //NOTE: const variables are always static in C#
 
 	public TrapController trapRef;
