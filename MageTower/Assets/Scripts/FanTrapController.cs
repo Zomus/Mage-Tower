@@ -18,13 +18,13 @@ public class FanTrapController : TrapController
     {
         if (def)
         {
-            GameController.setMaterialOfChild(transform, "Pad", "unnamed");
+            //GameController.setMaterialOfChild(transform, "Pad", "unnamed");
             //GameController.setMaterialOfChild(transform, "Spring", "unnamed");
             //Revert to standard unnamed material
         }
         else
         {
-            GameController.setMaterialOfChild(transform, "Pad", "PlaceError");
+            //GameController.setMaterialOfChild(transform, "Pad", "PlaceError");
             //GameController.setMaterialOfChild(transform, "Spring", "PlaceError");
             //Set the material to PlaceError
         }

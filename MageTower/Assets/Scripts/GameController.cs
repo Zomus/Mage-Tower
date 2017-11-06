@@ -184,8 +184,10 @@ public class GameController : MonoBehaviour {
                 if (castObject.tag == "Trappable")
                 {
                     //if the object hit is marked as "Trappable" by a tag AND trap is selected
-
-                    sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial(true);
+                    if (sampleTrap.samplePrefab != null)
+                    {
+                        sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial(true);
+                    }
 
                     //PLACING TRAP
                     if (Input.GetMouseButtonUp(0))
@@ -213,8 +215,10 @@ public class GameController : MonoBehaviour {
                 else
                 {
                     //not trappable
-
-                    sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial();
+                    if(sampleTrap.samplePrefab != null)
+                    {
+                        sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial();
+                    }
                 }
             }
             else

@@ -110,7 +110,7 @@ MonoBehaviour:
   m_MinSize: {x: 713, y: 492}
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 0
-  controlID: 140
+  controlID: 77
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -131,8 +131,8 @@ MonoBehaviour:
     y: 0
     width: 767
     height: 587
-  m_MinSize: {x: 202, y: 342}
-  m_MaxSize: {x: 4002, y: 8042}
+  m_MinSize: {x: 202, y: 321}
+  m_MaxSize: {x: 4002, y: 8021}
   vertical: 1
   controlID: 24
 --- !u!114 &7
@@ -181,8 +181,8 @@ MonoBehaviour:
     y: 268
     width: 767
     height: 319
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 492}
   m_MaxSize: {x: 10004, y: 14042}
   vertical: 1
-  controlID: 105
+  controlID: 78
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -341,10 +341,10 @@ MonoBehaviour:
     width: 230
     height: 237
   m_TreeViewState:
-    scrollPos: {x: 0, y: 132}
-    m_SelectedIDs: f2280000
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: b6270000
     m_LastClickedID: 0
-    m_ExpandedIDs: 3c57ffff827dffff7ab9ffff40f3ffff3ef9ffff000000008029000096290000522a0000
+    m_ExpandedIDs: dccaffffe4caffff30f7ffff00000000aa2a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -395,7 +395,7 @@ MonoBehaviour:
     height: 247
   m_SceneLighting: 1
   lastFramingTime: 4544.918345883011
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
@@ -416,17 +416,17 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
     yGrid:
-      m_Target: 1
-      speed: 2
-      m_Value: 1
-    zGrid:
       m_Target: 0
       speed: 2
       m_Value: 0
+    zGrid:
+      m_Target: 1
+      speed: 2
+      m_Value: 1
   m_Rotation:
-    m_Target: {x: 0.20758548, y: 0.051330023, z: -0.010909072, w: 0.97681135}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0.20758486, y: 0.05132987, z: -0.0109090395, w: 0.9768084}
+    m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
     m_Target: 24.639965
     speed: 2
@@ -666,13 +666,13 @@ MonoBehaviour:
   m_StartGridSize: 64
   m_LastFolders: []
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\Ben\Documents\GitHub\Mage-Tower\MageTower
+  m_LastProjectPath: D:\Users\Dunk\Documents\Mage Tower 2017\MageTower
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: f61d0000
     m_LastClickedID: 7670
-    m_ExpandedIDs: 000000008e2700009c270000a2270000a4270000bc27000002280000482800006e280000ae280000e4280000f0280000f6280000fa280000282900002e290000
+    m_ExpandedIDs: 00000000b6270000ee2700000e2800002a280000382800003e28000040280000582800009e280000a0280000e42800000a2900004c290000822900008e2900009429000098290000c6290000cc290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -697,24 +697,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 639.97656}
+    scrollPos: {x: 0, y: 298}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: b6dafdff000000007e2700008e2700009c270000a2270000a4270000bc2700000228000004280000482800006e280000ae280000e4280000f0280000f6280000fa280000282900002e290000302f0000
+    m_ExpandedIDs: 00000000b62700002a280000382800003e280000582800009e280000a0280000e42800000a2900004c290000822900008e2900009429000098290000c6290000cc290000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: TrapController
+      m_OriginalName: TrapController
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 1446
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_SearchString: 

@@ -15,7 +15,7 @@ public class SampleTrapController : MonoBehaviour {
         {
             Destroy(samplePrefab);
         }
-        else if(newTrapType != 0)
+        if(newTrapType != 0)
         {
             samplePrefab = Instantiate(GameController.main.trapClasses[newTrapType].prefab, transform);
         }
