@@ -181,7 +181,7 @@ public class GameController : MonoBehaviour {
                 sampleTrap.teleport(castPoint);
                 //display trap at cast location
                 
-                if (castObject.tag == "Trappable")
+                if (castObject.tag == "Trappable" && sampleTrap.GetComponent<SampleTrapController>().numberOfColliders == 0)
                 {
                     //if the object hit is marked as "Trappable" by a tag AND trap is selected
                     if (sampleTrap.samplePrefab != null)
@@ -194,7 +194,7 @@ public class GameController : MonoBehaviour {
                     {
                         //run this block upon clicking
 
-                        if (sampleTrap.colliding == 0)
+                        if (sampleTrap.numberOfColliders == 0)
                         {
                             //colliding with 0 objects
 
@@ -451,7 +451,7 @@ public class GameController : MonoBehaviour {
             }
         }
 
-        Debug.Log("Error: Child cannot be found.");
+        //Debug.Log("Error: Child cannot be found.");
         return null;
     }
 }
