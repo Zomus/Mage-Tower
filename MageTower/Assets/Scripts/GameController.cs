@@ -56,7 +56,7 @@ public class GameController : MonoBehaviour {
 	public GameObject enemyPrefab;
 	//Prefab (blueprint) of spawned enemies
 	public int enemiesLeft;
-	//enemies left to be spawned in this level
+	//enemies left to be spawned in this level (EDIT: So far to be unused)
 	private float lastSpawnTime;
 	//time at which the last enemy spawn occured since stage start
 	public float spawnRate;
@@ -273,9 +273,9 @@ public class GameController : MonoBehaviour {
 
 		//ENEMY SPAWNING
 		if(stageTimer - lastSpawnTime > spawnRate){
-			//time elapsed is enough to spawn another enemy
+            //time elapsed is enough to spawn another enemy
 
-			Vector3 randomOffset = new Vector3(Random.Range(-14f, 14f), 2f, -4f);
+            Vector3 randomOffset = new Vector3(0f, 0f, 0f);/*Random.Range(-14f, 14f), 2f, -4f);*/
 			//random offset to the spawn capsule to allow for random location spawning
 			spawnEnemy(spawnCapsule.transform.position.x + randomOffset.x, spawnCapsule.transform.position.y + randomOffset.y, spawnCapsule.transform.position.z + randomOffset.z);
 			//spawn the enemy
