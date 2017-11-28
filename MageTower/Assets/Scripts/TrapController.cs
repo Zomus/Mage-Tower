@@ -47,6 +47,4 @@ public class TrapController : MonoBehaviour
         Debug.Log("WARNING: This function should be overwritten by a sub-class");
     }
 
-    
-    
 }

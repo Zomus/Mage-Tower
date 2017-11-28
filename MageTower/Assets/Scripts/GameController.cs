@@ -180,7 +180,10 @@ public class GameController : MonoBehaviour {
 
                 sampleTrap.teleport(castPoint);
                 //display trap at cast location
-                
+
+                Debug.Log(castObject.name);
+                //EDIT: Cannot actually discern between ground and water...
+
                 if (castObject.tag == "Trappable" && sampleTrap.GetComponent<SampleTrapController>().numberOfColliders == 0)
                 {
                     //if the object hit is marked as "Trappable" by a tag AND trap is selected

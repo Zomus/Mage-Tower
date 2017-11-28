@@ -8,19 +8,25 @@ public class SpringTrapController : TrapController {
         if (def)
         {
             GameController.setMaterialOfChild(transform, "Pad", "unnamed");
-            //GameController.setMaterialOfChild(transform, "Spring", "unnamed");
+            GameController.setMaterialOfChild(transform, "Spring", "unnamed");
             //Revert to standard unnamed material
         }
         else
         {
             GameController.setMaterialOfChild(transform, "Pad", "PlaceError");
-            //GameController.setMaterialOfChild(transform, "Spring", "PlaceError");
+            GameController.setMaterialOfChild(transform, "Spring", "PlaceError");
             //Set the material to PlaceError
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
+        if(transform.parent.name == "SampleTrap")
+        {
+            //if it is just a sample trap
+            return;
+            //ignore any collision
+        }
         if (other.tag == "Enemy")
         {
             //hitting an enemy
