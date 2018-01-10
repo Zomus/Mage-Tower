@@ -15,10 +15,11 @@ public class GroundController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        
         if (other.tag == "Enemy")
         {
             //collider in tile hits an enemy
-
+            
             float landSpeed = other.GetComponent<Rigidbody>().velocity.y;
             //obtain the velocity of the enemy as it hits the ground
 

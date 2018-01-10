@@ -100,13 +100,11 @@
 -define:UNITY_TEAM_LICENSE
 -define:ENABLE_VSTU
 Assets/Scripts/AttackTrigger.cs
-Assets/Scripts/CameraController.cs
 Assets/Scripts/EnemyController.cs
 Assets/Scripts/ExampleClass.cs
 Assets/Scripts/FanTrapController.cs
 Assets/Scripts/FinanceDisplayer.cs
 Assets/Scripts/GameController.cs
-Assets/Scripts/GroundController.cs
 Assets/Scripts/LadderController.cs
 Assets/Scripts/MageHandController.cs
 Assets/Scripts/ParticleSelfDestruct.cs

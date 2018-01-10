@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider), typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
 public class EnemyController : MonoBehaviour
 {   /* ROLE:
 	 * Manages stats and creates functionality for enemies
@@ -13,7 +16,7 @@ public class EnemyController : MonoBehaviour
     //COMPONENTS
     Rigidbody rb;
     CapsuleCollider collider;
-    UnityEngine.AI.NavMeshAgent agent;
+    NavMeshAgent agent;
     Animator anim;
     //attached to child called Model
 

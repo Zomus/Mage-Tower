@@ -1,24 +1,30 @@
 fileFormatVersion: 2
-guid: a14b7e6c31a01254ebb2e25d76ce3ebc
-timeCreated: 1511219881
+guid: 9f94434f9ccfb22489255d80b409ef13
+timeCreated: 1515548075
 licenseType: Free
 ModelImporter:
   serializedVersion: 21
   fileIDToRecycleName:
     100000: Ground
-    100002: //RootNode
-    100004: Water
+    100002: Log
+    100004: Log.001
+    100006: //RootNode
     400000: Ground
-    400002: //RootNode
-    400004: Water
+    400002: Log
+    400004: Log.001
+    400006: //RootNode
     2300000: Ground
-    2300002: Water
+    2300002: Log
+    2300004: Log.001
     3300000: Ground
-    3300002: Water
-    4300000: Water
-    4300002: Ground
+    3300002: Log
+    3300004: Log.001
+    4300000: Log.001
+    4300002: Log
+    4300004: Ground
     6400000: Ground
-    6400002: Water
+    6400002: Log
+    6400004: Log.001
   materials:
     importMaterials: 1
     materialName: 0
