@@ -184,9 +184,9 @@ public class GameController : MonoBehaviour {
                 //Debug.Log(castObject.name);
                 //EDIT: Cannot actually discern between ground and water...
 
-                if (castObject.tag == "Trappable" && sampleTrap.GetComponent<SampleTrapController>().numberOfColliders == 0)
+                if (castObject.tag == "Ground" && sampleTrap.GetComponent<SampleTrapController>().numberOfColliders == 0)
                 {
-                    //if the object hit is marked as "Trappable" by a tag AND trap is selected
+                    //if the object hit is marked as "Ground" by a tag AND trap is selected
                     if (sampleTrap.samplePrefab != null)
                     {
                         sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial(true);
