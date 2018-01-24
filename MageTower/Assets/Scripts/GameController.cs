@@ -181,7 +181,7 @@ public class GameController : MonoBehaviour {
                 sampleTrap.teleport(castPoint);
                 //display trap at cast location
 
-                //Debug.Log(castObject.name);
+                Debug.Log(castObject.name);
                 //EDIT: Cannot actually discern between ground and water...
 
                 if (castObject.tag == "Ground" && sampleTrap.GetComponent<SampleTrapController>().numberOfColliders == 0)
@@ -189,7 +189,9 @@ public class GameController : MonoBehaviour {
                     //if the object hit is marked as "Ground" by a tag AND trap is selected
                     if (sampleTrap.samplePrefab != null)
                     {
-                        sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial(true);
+                        //sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial(true);
+
+                        sampleTrap.samplePrefab.GetComponent<TrapController>().changeBaseColor(Color.green);
                     }
 
                     //PLACING TRAP
@@ -221,6 +223,8 @@ public class GameController : MonoBehaviour {
                     if(sampleTrap.samplePrefab != null)
                     {
                         sampleTrap.samplePrefab.GetComponent<TrapController>().setMaterial();
+
+                        sampleTrap.samplePrefab.GetComponent<TrapController>().changeBaseColor(Color.red);
                     }
                 }
             }
@@ -299,19 +303,21 @@ public class GameController : MonoBehaviour {
 	}
 
 	GameObject castRayTarget(int layerMask){
-		/* PARAMETERS:
+        /* PARAMETERS:
 		 * layerMask = bit mask that filters out which layers should be ignored by the RayCast
 		 * DOES:
 		 * Casts a ray from the main camera to infinity at the mouse location
 		 * RETURN VALUE:
 		 * Returns the first object that the Ray hits; if no object is hit, returns null
 		 */
+        Vector3 mp = Input.mousePosition;
 
-		ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		//casts a ray from camera to the point where the mouse is hovering over
-
-		if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)){
-			//Physics.Raycast returns true if hits and return the hit object as a RaycastHit --> something is hit
+        ray = Camera.main.ScreenPointToRay(mp);
+        //casts a ray from camera to the point where the mouse is hovering over
+        Debug.DrawRay(Camera.main.transform.position, ray.direction * 100f, Color.red);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask)){
+            //Physics.Raycast returns true if hits and return the hit object as a RaycastHit --> something is hit
+            
 			return hit.collider.gameObject;
 			//return the object that is hit
 		}

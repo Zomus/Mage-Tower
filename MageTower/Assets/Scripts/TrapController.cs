@@ -20,18 +20,30 @@ public class TrapController : MonoBehaviour
     //COMPONENTS
     public Animator anim;
 
-    //PRIVATE VARIABLES
+    public SpriteRenderer areaBase;
+    //area marked by trap
+    /* Trap states:
+     * green = can be set
+     * grey = cannot be set due to lack of cash
+     * red = cannot be set due to location restrictions
+     * yellow = selecting an already set trap
+     */
+
+    //PUBLIC VARIABLES
+    public bool ready;
+    //whether this trap is ready to be set on another enemy
+    
     public int value;
     //type of trap (mapped above)
 
-    public bool ready;
-    //whether this trap is ready to be set on another enemy
+    
 
     //CLASS FUNCTIONS
     void Awake()
     {
         //DEFINE COMPONENTS
         anim = transform.Find("Model").GetComponent<Animator>();
+        areaBase = transform.Find("Base").GetComponent<SpriteRenderer>();
     }
 
     public void resetTrapAnimation()
@@ -47,4 +59,8 @@ public class TrapController : MonoBehaviour
         Debug.Log("WARNING: This function should be overwritten by a sub-class");
     }
 
+    public void changeBaseColor(Color clr)
+    {
+        areaBase.color = clr;
+    }
 }
