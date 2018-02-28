@@ -6,7 +6,7 @@ public class MageHandController : MonoBehaviour {
 	Animator anim;
     //int grabHash = Animator.StringToHash("Grab");
 
-    public Vector3 offset = new Vector3(1.5f, 0f, -2f);
+    public Vector3 offset;
     //offset between the coordinate offset of the (0, 0, 0) of the hand and its true center
 
     public EnemyController heldEnemy;

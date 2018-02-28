@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.AI;
 
+[RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider), typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
 public class EnemyController : MonoBehaviour
 {   /* ROLE:
 	 * Manages stats and creates functionality for enemies
@@ -13,7 +16,7 @@ public class EnemyController : MonoBehaviour
     //COMPONENTS
     Rigidbody rb;
     CapsuleCollider collider;
-    UnityEngine.AI.NavMeshAgent agent;
+    NavMeshAgent agent;
     Animator anim;
     //attached to child called Model
 
@@ -96,7 +99,7 @@ public class EnemyController : MonoBehaviour
 
             GameObject nextDestination = destList[nextDestIndex];
             //obtain the next destination in the destination list
-
+            
             if (targetFloor != currentFloor)
             {
                 rb.isKinematic = true;
@@ -174,7 +177,7 @@ public class EnemyController : MonoBehaviour
 
 		if(transform.position.y < -1){
             //if position is below the ground
-			death();
+			//death();
             //kill this enemy
 		}
 
@@ -198,14 +201,14 @@ public class EnemyController : MonoBehaviour
          */
 
 		targetFloor = (int)newGoal.transform.position.y;
-		//set the new targetfloor to the same floor as the new goal
-
+        //set the new targetfloor to the same floor as the new goal
+        
 		List<List<GameObject>> allPaths = generateAllPaths(currentFloor, targetFloor, newGoal);
-		//obtain all the paths that can be taken to the goal
+        //obtain all the paths that can be taken to the goal
 
 		if (allPaths.Count == 0) {
-			//if there are no paths
-
+            //if there are no paths
+            
 			agent.destination = transform.position;
 			//set its destination to where it already is (stops the agent from moving)
 
@@ -233,7 +236,7 @@ public class EnemyController : MonoBehaviour
 	}
 
 	List<List<GameObject>> generateAllPaths(int selectedFloor, int finalFloor, GameObject finalGoal){
-		/*	PARAMETERS:
+        /*	PARAMETERS:
          *	selectedFloor = floor at beginning of navigation
 		 * 	finalFloor = floor that contains the goal
 		 * 	finalGoal = the goal
@@ -253,8 +256,9 @@ public class EnemyController : MonoBehaviour
          * 	There is a logic error where an infinite path can be generated when a ladder connects above and below the goal.
          * 	An infinite path will be generated as the character will continuously go up and down the same ladder, which will most likely crash the program.
 		 */
+         
 
-		List<List<GameObject>> possiblePaths = new List<List<GameObject>>();
+        List<List<GameObject>> possiblePaths = new List<List<GameObject>>();
 		//initializes a list of possible paths to be sent back as the return value
 
 		if (targetFloor > selectedFloor){

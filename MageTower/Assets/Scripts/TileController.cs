@@ -19,6 +19,7 @@ public class TileController : MonoBehaviour {
     public const int NO_TRAP = 0;
 	public const int SPRING_TRAP = 1;
 	public const int SAW_TRAP = 2;
+    public const int FAN_TRAP = 3;
     //NOTE: const variables are always static in C#
 
 	public TrapController trapRef;
@@ -99,7 +100,7 @@ public class TileController : MonoBehaviour {
         trapRef = tempTrap.GetComponent<TrapController>();
         //obtain a reference to the trap that is placed on this tile
 
-        trapRef.setTileReference(this);
+        //trapRef.setTileReference(this);
         //pass a reference of this TileController object to the placed tile
     }
 
