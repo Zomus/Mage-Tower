@@ -181,8 +181,8 @@ public class GameController : MonoBehaviour {
                 sampleTrap.teleport(castPoint);
                 //display trap at cast location
 
-                Debug.Log(castObject.name);
-                //EDIT: Cannot actually discern between ground and water...
+                //Debug.Log(castObject.name);
+                //Prints out the object that the ray  is hitting
 
                 if (castObject.tag == "Ground" && sampleTrap.GetComponent<SampleTrapController>().numberOfColliders == 0)
                 {
