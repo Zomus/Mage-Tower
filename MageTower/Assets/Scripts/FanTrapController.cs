@@ -34,6 +34,12 @@ public class FanTrapController : TrapController
 
     void OnTriggerEnter(Collider other)
     {
+        if (transform.parent.name == "SampleTrap")
+        {
+            //if it is just a sample trap
+            return;
+            //ignore any collision
+        }
         if (other.tag == "Enemy")
         {
             //hitting an enemy

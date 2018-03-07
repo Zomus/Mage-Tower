@@ -51,9 +51,12 @@ public class SampleTrapController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (!collidedObjects.Contains(other) && other.tag == "TrapObstacle")
+        if (!collidedObjects.Contains(other) && (other.transform.parent != null && other.transform.parent.name != "SampleTrap") && other.tag == "Trap")
         {
+            //The list of collided objects does not already have this object AND the other object is not a sample trap AND the collided object is another trap (already placed trap)
+
             collidedObjects.Add(other);
+            //adds traps to list when colliding with it
         }
     }
 

@@ -82,7 +82,10 @@ public class GameController : MonoBehaviour {
 	*/
     
     public TrapClass[] trapClasses;
-	//0th element is left undefined as 0 means no trap
+    //0th element is left undefined as 0 means no trap
+
+    public GameObject lastSelected;
+    //last selected game object (usually a trap that can be sold)
 
 	//RAYCASTING - for mouse over tile selection
 	Ray ray;
@@ -212,6 +215,7 @@ public class GameController : MonoBehaviour {
 
                                 finance -= trapClasses[trapType].cost;
                                 //spend money to buy the trap
+
                             }
                             
                         }
@@ -358,6 +362,8 @@ public class GameController : MonoBehaviour {
     void placeTrap(int trapType, Vector3 dropLocation)
     {
         GameObject tempTrap = Instantiate(trapClasses[trapType].prefab, dropLocation, Quaternion.identity, trapContainer.transform) as GameObject;
+        diselectLast();
+        selectAsLast(tempTrap);
     }
 
     public static bool setMaterialOfChild(Transform obj, string child, string mat)
@@ -462,6 +468,25 @@ public class GameController : MonoBehaviour {
 
         //Debug.Log("Error: Child cannot be found.");
         return null;
+    }
+
+    private void diselectLast()
+    {
+        if (lastSelected == null) return;
+        if(lastSelected.GetComponent<TrapController>() != null)
+        {
+            lastSelected.GetComponent<TrapController>().changeBaseColor(Color.clear);
+        }
+        lastSelected = null;
+    }
+
+    private void selectAsLast(GameObject newSelect)
+    {
+        lastSelected = newSelect;
+        if (lastSelected.GetComponent<TrapController>() != null)
+        {
+            lastSelected.GetComponent<TrapController>().changeBaseColor(Color.yellow);
+        }
     }
 }
 

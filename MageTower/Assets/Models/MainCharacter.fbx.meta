@@ -1,0 +1,305 @@
+fileFormatVersion: 2
+guid: 672580d2905a8044dbee81384a46125a
+timeCreated: 1520387977
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Arm1_L
+    100002: Arm1_R
+    100004: Arm2_L
+    100006: Arm2_L_end
+    100008: Arm2_R
+    100010: Arm2_R_end
+    100012: Armature.002
+    100014: Bone.004
+    100016: Bone.004_end
+    100018: Bone.004_L
+    100020: Bone.004_L_end
+    100022: Bone.004_R
+    100024: Bone.004_R_end
+    100026: Cape_L.001
+    100028: Cape_L.001_end
+    100030: Cape_L.002
+    100032: Cape_L.002_end
+    100034: Cape_R.001
+    100036: Cape_R.001_end
+    100038: Cape_R.002
+    100040: Cape_R.002_end
+    100042: Chest
+    100044: Elbow_L
+    100046: Elbow_L_end
+    100048: Elbow_R
+    100050: Elbow_R_end
+    100052: Foot_L
+    100054: Foot_R
+    100056: Hair 1
+    100058: Hair 2
+    100060: Hair 3
+    100062: Hair 3_end
+    100064: Hand_L
+    100066: Hand_R
+    100068: Head
+    100070: Head_end
+    100072: Hip
+    100074: Index_L
+    100076: Index_L.001
+    100078: Index_L.002
+    100080: Index_L.002_end
+    100082: Index_R
+    100084: Index_R.001
+    100086: Index_R.002
+    100088: Index_R.002_end
+    100090: Knee_L
+    100092: Knee_L_end
+    100094: Knee_R
+    100096: Knee_R_end
+    100098: Leg_L
+    100100: Leg_R
+    100102: Little_L
+    100104: Little_L.001
+    100106: Little_L.002
+    100108: Little_L.002_end
+    100110: Little_R
+    100112: Little_R.001
+    100114: Little_R.002
+    100116: Little_R.002_end
+    100118: //RootNode
+    100120: Master
+    100122: Middle_L
+    100124: Middle_L.001
+    100126: Middle_L.002
+    100128: Middle_L.002_end
+    100130: Middle_R
+    100132: Middle_R.001
+    100134: Middle_R.002
+    100136: Middle_R.002_end
+    100138: Neck
+    100140: Ring_L
+    100142: Ring_L.001
+    100144: Ring_L.002
+    100146: Ring_L.002_end
+    100148: Ring_R
+    100150: Ring_R.001
+    100152: Ring_R.002
+    100154: Ring_R.002_end
+    100156: Shoulder_L
+    100158: Shoulder_R
+    100160: Skirt_L
+    100162: Skirt_L_end
+    100164: Skirt_R
+    100166: Skirt_R_end
+    100168: SkirtBack
+    100170: SkirtBack_end
+    100172: SkirtFront
+    100174: SkirtFront_end
+    100176: Thigh_L
+    100178: Thigh_R
+    100180: Thumb_L
+    100182: Thumb_L.001
+    100184: Thumb_L.002
+    100186: Thumb_L.002_end
+    100188: Thumb_R
+    100190: Thumb_R.001
+    100192: Thumb_R.002
+    100194: Thumb_R.002_end
+    100196: Waist
+    100198: WholeLeg_L
+    100200: WholeLeg_L_end
+    100202: WholeLeg_R
+    100204: WholeLeg_R_end
+    400000: Arm1_L
+    400002: Arm1_R
+    400004: Arm2_L
+    400006: Arm2_L_end
+    400008: Arm2_R
+    400010: Arm2_R_end
+    400012: Armature.002
+    400014: Bone.004
+    400016: Bone.004_end
+    400018: Bone.004_L
+    400020: Bone.004_L_end
+    400022: Bone.004_R
+    400024: Bone.004_R_end
+    400026: Cape_L.001
+    400028: Cape_L.001_end
+    400030: Cape_L.002
+    400032: Cape_L.002_end
+    400034: Cape_R.001
+    400036: Cape_R.001_end
+    400038: Cape_R.002
+    400040: Cape_R.002_end
+    400042: Chest
+    400044: Elbow_L
+    400046: Elbow_L_end
+    400048: Elbow_R
+    400050: Elbow_R_end
+    400052: Foot_L
+    400054: Foot_R
+    400056: Hair 1
+    400058: Hair 2
+    400060: Hair 3
+    400062: Hair 3_end
+    400064: Hand_L
+    400066: Hand_R
+    400068: Head
+    400070: Head_end
+    400072: Hip
+    400074: Index_L
+    400076: Index_L.001
+    400078: Index_L.002
+    400080: Index_L.002_end
+    400082: Index_R
+    400084: Index_R.001
+    400086: Index_R.002
+    400088: Index_R.002_end
+    400090: Knee_L
+    400092: Knee_L_end
+    400094: Knee_R
+    400096: Knee_R_end
+    400098: Leg_L
+    400100: Leg_R
+    400102: Little_L
+    400104: Little_L.001
+    400106: Little_L.002
+    400108: Little_L.002_end
+    400110: Little_R
+    400112: Little_R.001
+    400114: Little_R.002
+    400116: Little_R.002_end
+    400118: //RootNode
+    400120: Master
+    400122: Middle_L
+    400124: Middle_L.001
+    400126: Middle_L.002
+    400128: Middle_L.002_end
+    400130: Middle_R
+    400132: Middle_R.001
+    400134: Middle_R.002
+    400136: Middle_R.002_end
+    400138: Neck
+    400140: Ring_L
+    400142: Ring_L.001
+    400144: Ring_L.002
+    400146: Ring_L.002_end
+    400148: Ring_R
+    400150: Ring_R.001
+    400152: Ring_R.002
+    400154: Ring_R.002_end
+    400156: Shoulder_L
+    400158: Shoulder_R
+    400160: Skirt_L
+    400162: Skirt_L_end
+    400164: Skirt_R
+    400166: Skirt_R_end
+    400168: SkirtBack
+    400170: SkirtBack_end
+    400172: SkirtFront
+    400174: SkirtFront_end
+    400176: Thigh_L
+    400178: Thigh_R
+    400180: Thumb_L
+    400182: Thumb_L.001
+    400184: Thumb_L.002
+    400186: Thumb_L.002_end
+    400188: Thumb_R
+    400190: Thumb_R.001
+    400192: Thumb_R.002
+    400194: Thumb_R.002_end
+    400196: Waist
+    400198: WholeLeg_L
+    400200: WholeLeg_L_end
+    400202: WholeLeg_R
+    400204: WholeLeg_R_end
+    7400000: SorceressArmature|Action
+    7400002: SorceressArmature|Attack_NoArmour_OneHanded
+    7400004: SorceressArmature|CameraAction
+    7400006: SorceressArmature|Idle
+    7400008: SorceressArmature|Point.001Action
+    7400010: SorceressArmature|PointAction
+    7400012: SorceressArmature|Run (Armoured) (NoWeapon)
+    7400014: SorceressArmature|Run (Armoured) (Weapon)
+    7400016: SorceressArmature|Run (No Armour) (NoWeapon)
+    7400018: SorceressArmature|Run (No Armour) (Weapon)
+    7400020: Armature.002|Action
+    7400022: Armature.002|Attack_NoArmour_OneHanded
+    7400024: Armature.002|CameraAction
+    7400026: Armature.002|Idle
+    7400028: Armature.002|Point.001Action
+    7400030: Armature.002|PointAction
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
