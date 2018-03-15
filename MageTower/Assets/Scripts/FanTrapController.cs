@@ -1,17 +1,32 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class FanTrapController : TrapController
 {
-
     public float FanForce;
+    //magnitude of the pushing force of the fan's wind
+
+    public float cameraAngle;
+    //Main Camera's Transform.Rotation x value (degrees). This is manually given to the fan trap prefab.
+    //this can be implemented far better than it is currently
 
     private Vector3 FanForceVector;
+    //the pushing force of the fan's wind
+
+    private int spawnStage;
+    //0 = fan trap selected, 1 = fan trap placed but rotation is not defined, 2 = fan trap placed and rotation is defined
+
+
+    private Boolean setBool;
+    //false if rotation not set; true if rotation is set
 
     private void Start()
     {
-        FanForceVector = new Vector3(0.0f, 0.0f, -FanForce);
+        setBool = false;
+        spawnStage = 0;
+
     }
 
     public override void setMaterial(bool def = false)
@@ -30,12 +45,89 @@ public class FanTrapController : TrapController
         }
     }
 
+    void OnMouseOver()
+    {
+        //called every frame the cursor hovers over the fan trap
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            //if the player left clicks the fan
+
+            spawnStage = 1;
+
+
+
+
+            //the player is now controlling the fan's rotation
+        }
+    }
+
+    private void Update()
+    {
+        Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, -10f);
+        //point of the mouse using screen coordinates
+
+        Vector3 mouseOnGame = Camera.main.ScreenToWorldPoint(curScreenPoint);
+        //point of the mouse on the plane of the camera
+
+        float cameraAngleRad = cameraAngle * (Mathf.PI / 180f);
+
+
+        mouseOnGame = new Vector3(mouseOnGame.x, 0.0f, (float)(mouseOnGame.z + mouseOnGame.y / Math.Tan(cameraAngleRad)));
+        //extends the point of the mouse down onto the xz plane at y = 0
+        //currently, the calculations will be wrong if roll and yaw are changed from default/ main camera rotation y or z != 0
+        //the greater the difference between the fan's y and 0, the greater the calculations will be incorrect
+
+        if (transform.parent.name != "SampleTrap" && setBool == false)
+        {
+            //if it is not just a sample trap
+  
+            
+
+            float angle = 90f - (float)((180f / Math.PI) * Math.Atan2(mouseOnGame.z - transform.position.z, mouseOnGame.x - transform.position.x));
+            //this is the standard angle (degrees) between the +x axis and the mouse, with the fan being the origin 
+
+            transform.rotation = Quaternion.Euler(0, angle, 0);
+
+            //set the fan's rotation to the angle calculated above
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                setBool = true;
+                FanForceVector = new Vector3(0.0f, 0.0f, -FanForce);
+
+            }
+            //initialize the fan's force
+            //fans spawn facing the -z direction, hence the fan force is also in the -z direction
+
+            /*
+            float hitboxLengthHalf = 0.8f;
+
+            if (!(mouseOnGame.z > transform.position.z - hitboxLengthHalf && mouseOnGame.z < transform.position.z + hitboxLengthHalf + 0.5f &&
+                mouseOnGame.x > transform.position.x - hitboxLengthHalf && mouseOnGame.x < transform.position.x + hitboxLengthHalf))
+            {
+                heldDown = false;
+                //if the mouse clicks away from the fan, the fan will no longer be in the player's control
+            }
+            */
+
+        }
+
+    }
 
 
     void OnTriggerEnter(Collider other)
     {
+        if (transform.parent.name == "SampleTrap")
+        {
+            //if it is just a sample trap
+            return;
+            //ignore any collision
+        }
+
         if (other.tag == "Enemy")
         {
+
             //hitting an enemy
 
             EnemyController ec = other.GetComponent<EnemyController>();
@@ -58,10 +150,7 @@ public class FanTrapController : TrapController
 
                 //apply a force in the -z direction on the enemy to push it back
                 other.GetComponent<Rigidbody>().AddForce(FanForceVector, ForceMode.Impulse);
-
             }
-
         }
     }
-
 }
