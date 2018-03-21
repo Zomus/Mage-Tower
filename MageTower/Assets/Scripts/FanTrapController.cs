@@ -18,15 +18,15 @@ public class FanTrapController : TrapController
     private int spawnStage;
     //0 = fan trap selected, 1 = fan trap placed but rotation is not defined, 2 = fan trap placed and rotation is defined
 
-
     private Boolean setBool;
     //false if rotation not set; true if rotation is set
 
     private void Start()
     {
         setBool = false;
+        //FanTraps spawn without their rotation set
         spawnStage = 0;
-
+        //FanTraps spawn being selected
     }
 
     public override void setMaterial(bool def = false)
@@ -54,10 +54,6 @@ public class FanTrapController : TrapController
             //if the player left clicks the fan
 
             spawnStage = 1;
-
-
-
-
             //the player is now controlling the fan's rotation
         }
     }
@@ -71,7 +67,7 @@ public class FanTrapController : TrapController
         //point of the mouse on the plane of the camera
 
         float cameraAngleRad = cameraAngle * (Mathf.PI / 180f);
-
+        //the main camera's rotation x value in radians from degrees
 
         mouseOnGame = new Vector3(mouseOnGame.x, 0.0f, (float)(mouseOnGame.z + mouseOnGame.y / Math.Tan(cameraAngleRad)));
         //extends the point of the mouse down onto the xz plane at y = 0
@@ -80,39 +76,24 @@ public class FanTrapController : TrapController
 
         if (transform.parent.name != "SampleTrap" && setBool == false)
         {
-            //if it is not just a sample trap
+            //if it is not just a sample trap and its rotation has not been set
   
-            
-
             float angle = 90f - (float)((180f / Math.PI) * Math.Atan2(mouseOnGame.z - transform.position.z, mouseOnGame.x - transform.position.x));
             //this is the standard angle (degrees) between the +x axis and the mouse, with the fan being the origin 
 
             transform.rotation = Quaternion.Euler(0, angle, 0);
-
-            //set the fan's rotation to the angle calculated above
+            //set the fan's rotation to the angle calculated above, rotation is about the y axis
 
             if (Input.GetMouseButtonDown(0))
             {
+                //if the user clicks the mouse then the trap will set its rotation
                 setBool = true;
+                //the trap's rotation has been permanently set
                 FanForceVector = new Vector3(0.0f, 0.0f, -FanForce);
-
+                //the fan will now start blowing enemies away
+                //currently this is a constant force in the -z direction
             }
-            //initialize the fan's force
-            //fans spawn facing the -z direction, hence the fan force is also in the -z direction
-
-            /*
-            float hitboxLengthHalf = 0.8f;
-
-            if (!(mouseOnGame.z > transform.position.z - hitboxLengthHalf && mouseOnGame.z < transform.position.z + hitboxLengthHalf + 0.5f &&
-                mouseOnGame.x > transform.position.x - hitboxLengthHalf && mouseOnGame.x < transform.position.x + hitboxLengthHalf))
-            {
-                heldDown = false;
-                //if the mouse clicks away from the fan, the fan will no longer be in the player's control
-            }
-            */
-
         }
-
     }
 
 
@@ -127,7 +108,6 @@ public class FanTrapController : TrapController
 
         if (other.tag == "Enemy")
         {
-
             //hitting an enemy
 
             EnemyController ec = other.GetComponent<EnemyController>();
