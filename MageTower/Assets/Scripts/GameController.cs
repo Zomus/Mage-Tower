@@ -184,7 +184,7 @@ public class GameController : MonoBehaviour {
                 sampleTrap.teleport(castPoint);
                 //display trap at cast location
 
-                //Debug.Log(castObject.name);
+                Debug.Log(castObject.name);
                 //Prints out the object that the ray  is hitting
 
                 if (castObject.tag == "Ground" && sampleTrap.GetComponent<SampleTrapController>().numberOfColliders == 0)
@@ -480,12 +480,31 @@ public class GameController : MonoBehaviour {
         lastSelected = null;
     }
 
-    private void selectAsLast(GameObject newSelect)
+    public void selectAsLast(GameObject newSelect)
     {
         lastSelected = newSelect;
         if (lastSelected.GetComponent<TrapController>() != null)
         {
             lastSelected.GetComponent<TrapController>().changeBaseColor(Color.yellow);
+        }
+    }
+
+    public static void changeChildrenLayers(GameObject parentObject, int newLayer)
+    {
+        /* PARAMETERS:
+         * gameObject = parent parentObject whose children is to be searched
+         * newLayer = layer to switch all children gameobjects to
+         * DO:
+         * Changes all the gameobjects inside a parent object
+         */
+        
+        Transform[] arr = parentObject.GetComponentsInChildren<Transform>();
+        //obtains an array of parent objects
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            arr[i].gameObject.layer = newLayer;
+            //change the layer of the currently selected object
         }
     }
 }

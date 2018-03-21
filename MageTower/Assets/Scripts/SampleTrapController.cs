@@ -34,7 +34,10 @@ public class SampleTrapController : MonoBehaviour {
         }
         if(newTrapType != 0)
         {
-            samplePrefab = Instantiate(GameController.main.trapClasses[newTrapType].prefab, transform);
+            samplePrefab = Instantiate(GameController.main.trapClasses[newTrapType].prefab, transform) as GameObject;
+
+            GameController.changeChildrenLayers(samplePrefab, 8/*Ignore Raycast*/);
+            //change the layers of everything in the sample prefab to the ignore raycast layer
         }
     }
 
