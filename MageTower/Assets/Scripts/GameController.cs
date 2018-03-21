@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 	/* ROLE:
@@ -79,11 +80,16 @@ public class GameController : MonoBehaviour {
     /*Type of trap that is being placed
 	 * 1 = Spring Trap
 	 * 2 = Saw Trap
+     * 3 = Fan Trap
 	*/
     
     public TrapClass[] trapClasses;
     //0th element is left undefined as 0 means no trap
 
+
+    //UI Elements
+    public Button sellButton;
+    //button that allows the selected trap to be sold
 
     public GameObject lastHighlighted;
     //last highlighted game object (not selected but hovered over to show that it can be selected)
@@ -220,9 +226,6 @@ public class GameController : MonoBehaviour {
                                 placeTrap(trapType, castPoint);
                                 //place a trapType type trap on the tile
 
-                                finance -= trapClasses[trapType].cost;
-                                //spend money to buy the trap
-
                             }
                             
                         }
@@ -247,43 +250,63 @@ public class GameController : MonoBehaviour {
         else
         {
             //trap type is 0 (neutral mode - not placing down traps)
-            if (castObject.tag == "Enemy")
+
+            if(castObject != null)
             {
-                //if the object found is an enemy
-
-                if (Input.GetMouseButtonDown(0))
+                if (castObject.tag == "Enemy")
                 {
-                    //run this block upon clicking
+                    //if the object found is an enemy
 
-                    EnemyController pickedEnemy = castObject.GetComponent<EnemyController>();
-                    //obtain the EnemyController attached to the enemy
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        //run this block upon clicking
 
-                    pickedEnemy.held();
-                    //levitates enemy
+                        EnemyController pickedEnemy = castObject.GetComponent<EnemyController>();
+                        //obtain the EnemyController attached to the enemy
 
-                    mageHand.GetComponent<MageHandController>().heldEnemy = pickedEnemy;
-                    //store the enemy that has been picked up inside the MageHandController
+                        pickedEnemy.held();
+                        //levitates enemy
+
+                        mageHand.GetComponent<MageHandController>().heldEnemy = pickedEnemy;
+                        //store the enemy that has been picked up inside the MageHandController
+                    }
+
+                    if (Input.GetMouseButtonUp(0) && mageHand.GetComponent<MageHandController>().heldEnemy != null)
+                    {
+                        //run this block upon releasing
+
+                        mageHand.GetComponent<MageHandController>().heldEnemy.released();
+                        //release the enemy
+
+                        mageHand.GetComponent<MageHandController>().heldEnemy = null;
+                        //no enemy is being held again
+                    }
+
                 }
 
-                if (Input.GetMouseButtonUp(0) && mageHand.GetComponent<MageHandController>().heldEnemy != null)
+                else if (castObject.tag == "Trap")
                 {
-                    //run this block upon releasing
-
-                    mageHand.GetComponent<MageHandController>().heldEnemy.released();
-                    //release the enemy
-
-                    mageHand.GetComponent<MageHandController>().heldEnemy = null;
-                    //no enemy is being held again
+                    highlightAsLast(castObject);
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        selectAsLast(castObject);
+                    }
                 }
-                
+                else
+                {
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        diselectLast();
+                        //not selecting anything, so diselect all
+                    }
+                }
             }
-
-            if (castObject.tag == "Trap")
+            else
             {
-                highlightAsLast(castObject);
                 if (Input.GetMouseButtonUp(0))
                 {
-                    selectAsLast(castObject);
+                    diselectLast();
+                    //not selecting anything, so diselect all
                 }
             }
         }
@@ -378,6 +401,11 @@ public class GameController : MonoBehaviour {
     void placeTrap(int trapType, Vector3 dropLocation)
     {
         GameObject tempTrap = Instantiate(trapClasses[trapType].prefab, dropLocation, Quaternion.identity, trapContainer.transform) as GameObject;
+
+        tempTrap.GetComponent<TrapController>().value = trapClasses[trapType].cost;
+        finance -= trapClasses[trapType].cost;
+        //spend money to buy the trap
+
         selectAsLast(tempTrap);
     }
 
@@ -513,6 +541,9 @@ public class GameController : MonoBehaviour {
             lastSelected.GetComponent<TrapController>().changeBaseColor(Color.clear);
         }
         lastSelected = null;
+
+        sellButton.gameObject.SetActive(false);
+        //enable the sell button so that the trap can be sold
     }
 
     public void selectAsLast(GameObject newSelect)
@@ -523,6 +554,19 @@ public class GameController : MonoBehaviour {
         {
             lastSelected.GetComponent<TrapController>().changeBaseColor(Color.yellow);
         }
+
+        sellButton.gameObject.SetActive(true);
+        //enable the sell button so that the trap can be sold
+    }
+
+    public static void sellSelected()
+    {
+        TrapController tempTrap = main.lastSelected.GetComponent<TrapController>();
+        if (tempTrap != null)
+        {
+            tempTrap.sell();
+        }
+       
     }
 
 

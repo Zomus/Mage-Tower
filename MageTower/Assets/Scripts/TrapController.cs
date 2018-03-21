@@ -63,4 +63,10 @@ public class TrapController : MonoBehaviour
     {
         areaBase.color = clr;
     }
+
+    public void sell()
+    {
+        GameController.main.finance += (int)(value*0.6);
+        Destroy(gameObject);
+    }
 }

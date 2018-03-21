@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpringTrapController : TrapController {
+    
     public override void setMaterial(bool def = false)
     {
         if (def)
