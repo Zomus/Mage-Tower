@@ -84,6 +84,10 @@ public class GameController : MonoBehaviour {
     public TrapClass[] trapClasses;
     //0th element is left undefined as 0 means no trap
 
+
+    public GameObject lastHighlighted;
+    //last highlighted game object (not selected but hovered over to show that it can be selected)
+    
     public GameObject lastSelected;
     //last selected game object (usually a trap that can be sold)
 
@@ -169,6 +173,9 @@ public class GameController : MonoBehaviour {
         Vector3 castPoint = castRayPoint(mask);
         //cast a ray based on mouse location to obtain a point at which it hit something
 
+        unhighlightLast();
+        //unhighlight whatever trap was hovered over in last frame
+
         //SELECTION
         if (trapType != 0)
         {
@@ -184,7 +191,7 @@ public class GameController : MonoBehaviour {
                 sampleTrap.teleport(castPoint);
                 //display trap at cast location
 
-                Debug.Log(castObject.name);
+                //Debug.Log(castObject.name);
                 //Prints out the object that the ray  is hitting
 
                 if (castObject.tag == "Ground" && sampleTrap.GetComponent<SampleTrapController>().numberOfColliders == 0)
@@ -239,7 +246,7 @@ public class GameController : MonoBehaviour {
         }
         else
         {
-            //trap type is 0 (killing enemies mode)
+            //trap type is 0 (neutral mode - not placing down traps)
             if (castObject.tag == "Enemy")
             {
                 //if the object found is an enemy
@@ -269,6 +276,15 @@ public class GameController : MonoBehaviour {
                     //no enemy is being held again
                 }
                 
+            }
+
+            if (castObject.tag == "Trap")
+            {
+                highlightAsLast(castObject);
+                if (Input.GetMouseButtonUp(0))
+                {
+                    selectAsLast(castObject);
+                }
             }
         }
 
@@ -362,7 +378,6 @@ public class GameController : MonoBehaviour {
     void placeTrap(int trapType, Vector3 dropLocation)
     {
         GameObject tempTrap = Instantiate(trapClasses[trapType].prefab, dropLocation, Quaternion.identity, trapContainer.transform) as GameObject;
-        diselectLast();
         selectAsLast(tempTrap);
     }
 
@@ -470,10 +485,30 @@ public class GameController : MonoBehaviour {
         return null;
     }
 
+    private void unhighlightLast()
+    {
+        if (lastHighlighted == null) return;
+        if(lastHighlighted.GetComponent<TrapController>() != null && lastHighlighted != lastSelected)
+        {
+            lastHighlighted.GetComponent<TrapController>().changeBaseColor(Color.clear);
+        }
+        lastHighlighted = null;
+    }
+
+    public void highlightAsLast(GameObject newHighlight)
+    {
+        unhighlightLast();
+        lastHighlighted = newHighlight;
+        if (lastHighlighted.GetComponent<TrapController>() != null && lastHighlighted != lastSelected)
+        {
+            lastHighlighted.GetComponent<TrapController>().changeBaseColor(Color.magenta);
+        }
+    }
+
     private void diselectLast()
     {
         if (lastSelected == null) return;
-        if(lastSelected.GetComponent<TrapController>() != null)
+        if (lastSelected.GetComponent<TrapController>() != null)
         {
             lastSelected.GetComponent<TrapController>().changeBaseColor(Color.clear);
         }
@@ -482,12 +517,14 @@ public class GameController : MonoBehaviour {
 
     public void selectAsLast(GameObject newSelect)
     {
+        diselectLast();
         lastSelected = newSelect;
-        if (lastSelected.GetComponent<TrapController>() != null)
+        if(lastSelected.GetComponent<TrapController>() != null)
         {
             lastSelected.GetComponent<TrapController>().changeBaseColor(Color.yellow);
         }
     }
+
 
     public static void changeChildrenLayers(GameObject parentObject, int newLayer)
     {
