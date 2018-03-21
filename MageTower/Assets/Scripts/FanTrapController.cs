@@ -13,7 +13,7 @@ public class FanTrapController : TrapController
     //this can be implemented far better than it is currently
 
     private Vector3 FanForceVector;
-    //the pushing force of the fan's wind
+    //vector of the pushing force of the fan's wind
 
     private int spawnStage;
     //0 = fan trap selected, 1 = fan trap placed but rotation is not defined, 2 = fan trap placed and rotation is defined
@@ -79,7 +79,7 @@ public class FanTrapController : TrapController
             //if it is not just a sample trap and its rotation has not been set
   
             float angle = 90f - (float)((180f / Math.PI) * Math.Atan2(mouseOnGame.z - transform.position.z, mouseOnGame.x - transform.position.x));
-            //this is the standard angle (degrees) between the +x axis and the mouse, with the fan being the origin 
+            //this is the standard angle (degrees) between the +z axis and the mouse, with the fan being the origin 
 
             transform.rotation = Quaternion.Euler(0, angle, 0);
             //set the fan's rotation to the angle calculated above, rotation is about the y axis
@@ -87,15 +87,17 @@ public class FanTrapController : TrapController
             if (Input.GetMouseButtonDown(0))
             {
                 //if the user clicks the mouse then the trap will set its rotation
+
                 setBool = true;
                 //the trap's rotation has been permanently set
-                FanForceVector = new Vector3(0.0f, 0.0f, -FanForce);
-                //the fan will now start blowing enemies away
-                //currently this is a constant force in the -z direction
+
+                FanForceVector = new Vector3(FanForce * (float)Math.Sin((double)(angle * Math.PI/180f)), 0.0f,
+                                             FanForce * (float)Math.Cos((double)(angle * Math.PI / 180f)));
+                //the fan will now start blowing enemies away in the direction of its set rotation
             }
         }
     }
-
+    
 
     void OnTriggerEnter(Collider other)
     {
@@ -128,8 +130,8 @@ public class FanTrapController : TrapController
             {
                 //trap is ready to be sprung
 
-                //apply a force in the -z direction on the enemy to push it back
                 other.GetComponent<Rigidbody>().AddForce(FanForceVector, ForceMode.Impulse);
+                //apply the fan force to the enemy
             }
         }
     }
