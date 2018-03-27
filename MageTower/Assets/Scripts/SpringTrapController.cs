@@ -20,6 +20,14 @@ public class SpringTrapController : TrapController {
         }
     }
 
+    public override void clickTrap()
+    {
+        ready = true;
+        //reset trap back to ready state
+        anim.SetBool("Triggered", false);
+        //triger trap animation
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if(transform.parent.name == "SampleTrap")

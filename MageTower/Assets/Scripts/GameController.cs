@@ -552,6 +552,7 @@ public class GameController : MonoBehaviour {
         lastSelected = newSelect;
         if(lastSelected.GetComponent<TrapController>() != null)
         {
+            lastSelected.GetComponent<TrapController>().clickTrap();
             lastSelected.GetComponent<TrapController>().changeBaseColor(Color.yellow);
         }
 

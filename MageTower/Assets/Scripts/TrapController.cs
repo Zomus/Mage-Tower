@@ -54,8 +54,17 @@ public class TrapController : MonoBehaviour
         anim.SetBool("Triggered", false);
         //set trap animation back to ready state
     }
+
     public virtual void setMaterial(bool def = false)
     {
+        Debug.Log("WARNING: This function should be overwritten by a sub-class");
+    }
+
+    public virtual void clickTrap()
+    {
+        /* DO:
+         * Each trap should have this function, whether to reset or to activate it.
+         */
         Debug.Log("WARNING: This function should be overwritten by a sub-class");
     }
 
