@@ -21,13 +21,37 @@ public class FanTrapController : TrapController
     private Boolean setBool;
     //false if rotation not set; true if rotation is set
 
+    private float angle;
+    //angle of the fan
+
+    private int fanActiveTimerCounter;
+    //how many frames since the fan has last been set/reset
+
     private void Start()
     {
+
+        if ((transform.parent.tag == "SampleTrap" && GameObject.FindGameObjectsWithTag("SampleTrap").Length > 1)
+            || GameObject.FindGameObjectsWithTag("FanTrapArrow").Length > 1)
+        {
+
+
+            //if the FanTrap is a child of the SampleTrap, which is tagged "SampleTrap"
+
+            Destroy(this.gameObject);
+            //the fan trap will essentially not spawn
+        }
+
+
+
+
+
+
         setBool = false;
         //FanTraps spawn without their rotation set
         spawnStage = 0;
         //FanTraps spawn being selected
     }
+
 
     public override void setMaterial(bool def = false)
     {
@@ -78,7 +102,7 @@ public class FanTrapController : TrapController
         {
             //if it is not just a sample trap and its rotation has not been set
   
-            float angle = 90f - (float)((180f / Math.PI) * Math.Atan2(mouseOnGame.z - transform.position.z, mouseOnGame.x - transform.position.x));
+            angle = 90f - (float)((180f / Math.PI) * Math.Atan2(mouseOnGame.z - transform.position.z, mouseOnGame.x - transform.position.x));
             //this is the standard angle (degrees) between the +z axis and the mouse, with the fan being the origin 
 
             transform.rotation = Quaternion.Euler(0, angle, 0);
@@ -91,11 +115,28 @@ public class FanTrapController : TrapController
                 setBool = true;
                 //the trap's rotation has been permanently set
 
-                FanForceVector = new Vector3(FanForce * (float)Math.Sin((double)(angle * Math.PI/180f)), 0.0f,
-                                             FanForce * (float)Math.Cos((double)(angle * Math.PI / 180f)));
-                //the fan will now start blowing enemies away in the direction of its set rotation
+                fanActiveTimerCounter = 0;
+                //the fan will now begin to blow
             }
         }
+        if (setBool == true)
+        {
+            FanForce = 1000/((float)Math.Pow((10.0f * fanActiveTimerCounter * Time.deltaTime - 25.0f), 2) +80f);
+
+            //FanForce = 1000/((10t-25)^2+80)
+            Debug.Log("FanForce = " + FanForce);
+            //FanForce as a function of time
+
+            fanActiveTimerCounter++;
+            //increment the counter;
+
+
+            FanForceVector = new Vector3((float)Math.Sin((double)(angle * Math.PI / 180f)), 0.0f, (float)Math.Cos((double)(angle * Math.PI / 180f)));
+            //the fan will now start blowing enemies away in the direction of its set rotation
+
+            FanForceVector *= FanForce;
+        }
+
     }
     
 

@@ -148,11 +148,22 @@ public class GameController : MonoBehaviour {
         }
         else if(Input.GetKeyDown(KeyCode.Alpha3))
         {
-            //if key 3 is pressed 
-            trapType = 3;
-            //fan trap will be selected
-            sampleTrap.convertType(trapType);
-            //apply new type to the sampleTrap
+            if(trapType != 3)
+            {
+                //if key 3 is pressed 
+                trapType = 3;
+                //fan trap will be selected
+                sampleTrap.convertType(trapType);
+                //apply new type to the sampleTrap
+            }
+            else
+            {
+                //if the current fan trap has not been dispensed with
+                trapType = 0;
+                //no traps will be selected
+                sampleTrap.convertType(trapType);
+                //apply new type to the sampleTrap
+            }
         }
 
         //LAYERING - allows selection of tile to place traps on
@@ -212,8 +223,17 @@ public class GameController : MonoBehaviour {
 
                                 finance -= trapClasses[trapType].cost;
                                 //spend money to buy the trap
+
+                                if (trapType == 3)
+                                {
+                                    //if the trap that was just placed was a fan trap
+                                    trapType = 0;
+                                    //no traps will be selected
+                                    sampleTrap.convertType(trapType);
+                                    //apply new type to the sampleTrap
+                                }
                             }
-                            
+
                         }
                     }
                 }

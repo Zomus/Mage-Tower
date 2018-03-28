@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class FanTrapArrowController : MonoBehaviour {
 
+    private int destroyStage;
+
     void Start ()
     {
+        destroyStage = 2;
+
         //Fan Traps (and the arrows) are spawned as sample traps and clones in the TrapContainer
 		if(transform.parent.parent.tag == "SampleTrap")
         {
@@ -23,8 +27,12 @@ public class FanTrapArrowController : MonoBehaviour {
         {
             //if the mouse is held down
 
+            destroyStage--;
+        }
+        if(destroyStage == 1)
+        {
             Destroy(this.gameObject);
-            //destroy the arrow because upon mouse 1 being clicked, the fan direction is set.
+            //destroy the arrow because upon mouse 1 being clicked, the fan direction is set.)
         }
     }
 }
