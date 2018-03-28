@@ -139,46 +139,48 @@ public class GameController : MonoBehaviour {
 	void Update () {
 		//KEYBOARD INPUT - allows selection of trap type
 		if(Input.GetKeyDown(KeyCode.Alpha0)){
-			//if 0 key is pressed
-			trapType = 0;
-            //no traps will be selected
-            sampleTrap.convertType(trapType);
-            //apply new type to the sampleTrap
-		}
+            //if 0 key is pressed
+            ChangeTrapType(0);
+
+        }
 		else if(Input.GetKeyDown(KeyCode.Alpha1)){
-			//if 1 key is pressed
-			trapType = 1;
-            //spring trap will be selected
-            sampleTrap.convertType(trapType);
-            //apply new type to the sampleTrap
+            //if 1 key is pressed
+            ChangeTrapType(1);
         }
         else if(Input.GetKeyDown(KeyCode.Alpha2)){
-			//if 2 key is pressed
-			trapType = 2;
-            //saw trap will be selected
-            sampleTrap.convertType(trapType);
-            //apply new type to the sampleTrap
+            //if 2 key is pressed
+            ChangeTrapType(2);
         }
         else if(Input.GetKeyDown(KeyCode.Alpha3))
         {
             //if key 3 is pressed 
-            trapType = 3;
-            //fan trap will be selected
-            sampleTrap.convertType(trapType);
-            //apply new type to the sampleTrap
+            ChangeTrapType(3);
         }
 
         //LAYERING - allows selection of tile to place traps on
         int mask = ~(1 << 8);
-		//Creates a layermask that allows the ray to pass through layer 8 (layer that contains the mage hand as to not select it)
+        //Creates a layermask that allows the ray to pass through layer 8 (layer that contains the mage hand as to not select it)
+        //CASTING THE RAY - to obtain the object that the player is pointing at
 
-		//CASTING THE RAY - to obtain the object that the player is pointing at
-		GameObject castObject = castRayTarget(mask);
-        //cast a ray based on mouse location to obtain a GameObject (through the mask)
+        GameObject castObject = null;
+        //object that the raycast hits
+        Vector3 castPoint = Vector3.negativeInfinity;
+        //world space point that the raycast hits
 
-        Vector3 castPoint = castRayPoint(mask);
-        //cast a ray based on mouse location to obtain a point at which it hit something
+        //they are given default values if the mouse is hovered over a UI element
 
+        if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+        {
+            //If mouse is not hovering over a UI element
+            castObject = castRayTarget(mask);
+            //cast a ray based on mouse location to obtain a GameObject (through the mask)
+
+            castPoint = castRayPoint(mask);
+            //cast a ray based on mouse location to obtain a point at which it hit something
+        }
+
+
+        
         unhighlightLast();
         //unhighlight whatever trap was hovered over in last frame
 
@@ -345,7 +347,19 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	GameObject castRayTarget(int layerMask){
+    public void ChangeTrapType(int newTrapType)
+    {
+        /* PARAMETERS:
+         * newTrapType = trap type to be switched to
+         * DO:
+         * Changes the current trap being placed to the new type (where 0 means hand is selecting).
+         */
+        main.trapType = newTrapType;
+        main.sampleTrap.convertType(newTrapType);
+        //apply new type to the sampleTrap
+    }
+
+    GameObject castRayTarget(int layerMask){
         /* PARAMETERS:
 		 * layerMask = bit mask that filters out which layers should be ignored by the RayCast
 		 * DOES:
@@ -556,8 +570,12 @@ public class GameController : MonoBehaviour {
             lastSelected.GetComponent<TrapController>().changeBaseColor(Color.yellow);
         }
 
-        sellButton.gameObject.SetActive(true);
-        //enable the sell button so that the trap can be sold
+        if (trapType == 0)
+        {
+            //not placing traps
+            sellButton.gameObject.SetActive(true);
+            //enable the sell button so that the trap can be sold
+        }
     }
 
     public static void sellSelected()
