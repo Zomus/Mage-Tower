@@ -227,9 +227,8 @@ public class GameController : MonoBehaviour {
 
                                 placeTrap(trapType, castPoint);
                                 //place a trapType type trap on the tile
-
                             }
-                            
+
                         }
                     }
                 }
@@ -421,6 +420,16 @@ public class GameController : MonoBehaviour {
         //spend money to buy the trap
 
         selectAsLast(tempTrap);
+        //select the last placed trap as last
+
+        if (trapType == 3)
+        {
+            //if the trap that was just placed was a fan trap
+            trapType = 0;
+            //no traps will be selected
+            sampleTrap.convertType(trapType);
+            //apply new type to the sampleTrap
+        }
     }
 
     public static bool setMaterialOfChild(Transform obj, string child, string mat)
