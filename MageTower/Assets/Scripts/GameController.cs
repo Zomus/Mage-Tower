@@ -82,7 +82,25 @@ public class GameController : MonoBehaviour {
 	 * 2 = Saw Trap
      * 3 = Fan Trap
 	*/
-    
+
+    private int _trapState;
+    private IEnumerator lazyUpdateTrapState(int v)
+    {
+        yield return null;
+        _trapState = v;
+    }
+    public int trapState {
+        get { return _trapState;  }
+        set
+        {
+            StartCoroutine(lazyUpdateTrapState(value));
+        }
+    }
+    /*state of trap being placed
+     * 0 = placing it for the first time
+     * 1 = setting direction (fan trap)
+     */
+
     public TrapClass[] trapClasses;
     //0th element is left undefined as 0 means no trap
 
@@ -100,6 +118,8 @@ public class GameController : MonoBehaviour {
 	//RAYCASTING - for mouse over tile selection
 	Ray ray;
 	RaycastHit hit;
+
+    public bool delayCast;
 
     [System.Serializable]
     public class TrapClass
@@ -138,24 +158,31 @@ public class GameController : MonoBehaviour {
 
 	void Update () {
 		//KEYBOARD INPUT - allows selection of trap type
-		if(Input.GetKeyDown(KeyCode.Alpha0)){
-            //if 0 key is pressed
-            ChangeTrapType(0);
-
-        }
-		else if(Input.GetKeyDown(KeyCode.Alpha1)){
-            //if 1 key is pressed
-            ChangeTrapType(1);
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha2)){
-            //if 2 key is pressed
-            ChangeTrapType(2);
-        }
-        else if(Input.GetKeyDown(KeyCode.Alpha3))
+        if(trapState == 0)
         {
-            //if key 3 is pressed 
-            ChangeTrapType(3);
+            if (Input.GetKeyDown(KeyCode.Alpha0))
+            {
+                //if 0 key is pressed
+                ChangeTrapType(0);
+
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                //if 1 key is pressed
+                ChangeTrapType(1);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                //if 2 key is pressed
+                ChangeTrapType(2);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                //if key 3 is pressed 
+                ChangeTrapType(3);
+            }
         }
+		
 
         //LAYERING - allows selection of tile to place traps on
         int mask = ~(1 << 8);
@@ -213,7 +240,7 @@ public class GameController : MonoBehaviour {
                     }
 
                     //PLACING TRAP
-                    if (Input.GetMouseButtonUp(0))
+                    if (Input.GetMouseButtonDown(0))
                     {
                         //run this block upon clicking
 
@@ -312,7 +339,12 @@ public class GameController : MonoBehaviour {
             }
         }
 
+        /*if(Input.GetMouseButtonDown(0) && trapState == 1)
+        {
 
+        }*/
+
+        delayCast = false;
         
         
 		//STAGE TIMER
@@ -345,7 +377,7 @@ public class GameController : MonoBehaviour {
 			//toggle state of the pauseMenu
 		}
 	}
-
+    
     public void ChangeTrapType(int newTrapType)
     {
         /* PARAMETERS:
@@ -411,24 +443,31 @@ public class GameController : MonoBehaviour {
         }
     }
 
+
+
+
     void placeTrap(int trapType, Vector3 dropLocation)
     {
-        GameObject tempTrap = Instantiate(trapClasses[trapType].prefab, dropLocation, Quaternion.identity, trapContainer.transform) as GameObject;
-
-        tempTrap.GetComponent<TrapController>().value = trapClasses[trapType].cost;
-        finance -= trapClasses[trapType].cost;
-        //spend money to buy the trap
-
-        selectAsLast(tempTrap);
-        //select the last placed trap as last
-
-        if (trapType == 3)
+        if (trapState == 0)
         {
-            //if the trap that was just placed was a fan trap
-            trapType = 0;
-            //no traps will be selected
-            sampleTrap.convertType(trapType);
-            //apply new type to the sampleTrap
+            GameObject tempTrap = Instantiate(trapClasses[trapType].prefab, dropLocation, Quaternion.identity, trapContainer.transform) as GameObject;
+
+            tempTrap.GetComponent<TrapController>().value = trapClasses[trapType].cost;
+            finance -= trapClasses[trapType].cost;
+            //spend money to buy the trap
+
+            selectAsLast(tempTrap);
+            //select the last placed trap as last
+
+            if (trapType == 3)
+            {
+                //if the trap that was just placed was a fan trap
+
+                trapState = 1;
+                //no traps will be selected
+                sampleTrap.convertType(0);
+                //apply new type to the sampleTrap
+            }
         }
     }
 

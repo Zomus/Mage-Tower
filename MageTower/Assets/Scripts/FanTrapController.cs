@@ -27,20 +27,22 @@ public class FanTrapController : TrapController
     private int fanActiveTimerCounter;
     //how many frames since the fan has last been set/reset
 
+    public GameObject arrow;
+    //arrow of the game object
+
     private void Start()
     {
+        arrow = transform.Find("FanTrapArrow").gameObject;
+        //set reference to arrow
 
-        if ((transform.parent.tag == "SampleTrap" && GameObject.FindGameObjectsWithTag("SampleTrap").Length > 1)
-            || GameObject.FindGameObjectsWithTag("FanTrapArrow").Length > 1)
+
+        if (transform.parent.name == "SampleTrap")
         {
-
-
-            //if the FanTrap is a child of the SampleTrap, which is tagged "SampleTrap"
-
-            Destroy(this.gameObject);
-            //the fan trap will essentially not spawn
+            //if it is just a sample trap
+            Destroy(arrow);
+            //ignore any collision
         }
-        
+
 
         setBool = false;
         //FanTraps spawn without their rotation set
@@ -107,9 +109,17 @@ public class FanTrapController : TrapController
             if (Input.GetMouseButtonDown(0))
             {
                 //if the user clicks the mouse then the trap will set its rotation
-
+                
                 setBool = true;
                 //the trap's rotation has been permanently set
+
+                Destroy(arrow);
+
+                GameController.main.ChangeTrapType(3);
+                //ready the trap setting again
+
+                GameController.main.delayCast = true;
+                GameController.main.trapState = 0;
 
                 fanActiveTimerCounter = 0;
                 //the fan will now begin to blow
@@ -120,7 +130,7 @@ public class FanTrapController : TrapController
             FanForce = 1000/((float)Math.Pow((10.0f * fanActiveTimerCounter * Time.deltaTime - 25.0f), 2) +80f);
 
             //FanForce = 1000/((10t-25)^2+80)
-            Debug.Log("FanForce = " + FanForce);
+            //Debug.Log("FanForce = " + FanForce);
             //FanForce as a function of time
 
             fanActiveTimerCounter++;
@@ -132,6 +142,8 @@ public class FanTrapController : TrapController
 
             FanForceVector *= FanForce;
         }
+
+
 
     }
     
